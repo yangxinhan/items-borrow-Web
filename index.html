@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>裝置借用狀態</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        button { cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="loginSection">
+        <h2>登入</h2>
+        <input type="email" id="emailInput" placeholder="電子郵件">
+        <input type="password" id="passwordInput" placeholder="密碼">
+        <button onclick="login()">登入</button>
+    </div>
+
+    <div id="appSection" style="display: none;">
+        <h1>裝置借用狀態</h1>
+        <button onclick="logout()">登出</button>
+        <table id="deviceTable">
+            <tr>
+                <th>裝置名稱</th>
+                <th>借出狀態</th>
+                <th>借閱班級</th>
+                <th>時間</th>
+                <th>物品備註</th>
+            </tr>
+        </table>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="app.js"></script>
+    
+</body>
+</html>
