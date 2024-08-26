@@ -1,4 +1,4 @@
-// 您的 Firebase 配置
+//Firebase 配置
 const firebaseConfig = {
     apiKey: "AIzaSyBU4XZ7nqnvkP3F31S9X4Ip2Gd9JrXjf6c",
     authDomain: "items-49542.firebaseapp.com",
