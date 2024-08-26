@@ -1,4 +1,5 @@
-body { 
+body {
+    background-color: #bdc2c5;
     font-family: Arial,sans-serif;
     line-height: 1.6; 
     padding: 20px; 
@@ -16,9 +17,10 @@ th, td {
 }
 
 th { 
-    background-color: #f2f2f2; 
+    background-color: #edf3f7; 
 }
 
 button { 
     cursor: pointer; 
+    background-color: #edf3f7;
 }
