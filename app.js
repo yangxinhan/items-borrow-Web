@@ -1,4 +1,4 @@
-//Firebase 配置
+// Firebase 配置
 const firebaseConfig = {
     apiKey: "AIzaSyBU4XZ7nqnvkP3F31S9X4Ip2Gd9JrXjf6c",
     authDomain: "items-49542.firebaseapp.com",
@@ -14,6 +14,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
+let currentUser = null;
+const privilegedUsers = ['teacher', 'yang']; // 特權用戶列表
+
 function login() {
     const email = document.getElementById('emailInput').value;
     const password = document.getElementById('passwordInput').value;
@@ -23,7 +26,9 @@ function login() {
         .then((snapshot) => {
             if (snapshot.exists() && snapshot.val() === password) {
                 // 登入成功
+                currentUser = email;
                 showApp();
+                updateCurrentUserDisplay(); // 新增：更新當前用戶顯示
             } else {
                 alert('登入失敗: 帳號或密碼錯誤');
             }
@@ -35,7 +40,9 @@ function login() {
 }
 
 function logout() {
+    currentUser = null;
     showLogin();
+    updateCurrentUserDisplay(); // 新增：更新當前用戶顯示（清空）
 }
 
 function showLogin() {
@@ -47,6 +54,17 @@ function showApp() {
     document.getElementById('loginSection').style.display = 'none';
     document.getElementById('appSection').style.display = 'block';
     updateDevices();
+    updateCurrentUserDisplay(); // 新增：更新當前用戶顯示
+}
+
+// 新增：更新當前用戶顯示的函數
+function updateCurrentUserDisplay() {
+    const userDisplayElement = document.getElementById('currentUserDisplay');
+    if (currentUser) {
+        userDisplayElement.textContent = `當前用戶: ${currentUser}`;
+    } else {
+        userDisplayElement.textContent = '';
+    }
 }
 
 // 初始顯示登入界面
@@ -75,12 +93,20 @@ function updateDevices() {
             actionButton.textContent = device.borrowed ? '歸還' : '借出';
             actionButton.onclick = () => device.borrowed ? returnDevice(id) : borrowDevice(id);
             actionCell.appendChild(actionButton);
+
+            // 為特權用戶添加備註按鈕
+            if (privilegedUsers.includes(currentUser)) {
+                const noteButton = document.createElement('button');
+                noteButton.textContent = '添加備註';
+                noteButton.onclick = () => addNote(id);
+                actionCell.appendChild(noteButton);
+            }
         }
     });
 }
 
 function borrowDevice(deviceId) {
-    const a = prompt("請輸入班級：");
+    const a = `${currentUser}`;
     const b = prompt("請輸入座號：");
     const c = prompt("請輸入姓名：");
     const borrowClass = a + b + c;
@@ -108,4 +134,11 @@ function returnDevice(deviceId) {
 function updateDevice(deviceId, data) {
     const deviceRef = database.ref(`devices/${deviceId}`);
     deviceRef.update(data);
+}
+
+function addNote(deviceId) {
+    const note = prompt("請輸入備註：");
+    if (note !== null) {
+        updateDevice(deviceId, { note: note });
+    }
 }
