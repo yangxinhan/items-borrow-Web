@@ -1,0 +1,358 @@
+{
+    "devices": {
+        "device01": {
+            "name": "samsung手機Sam01(含充電線組)",
+            "borrowed": false,
+            "note": "手機密碼dwhssam01"
+        },
+        "device02": {
+            "name": "samsung手機Sam02(含充電線組)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device03": {
+            "name": "samsung手機Sam03(含充電線組)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device04": {
+            "name": "samsung手機Sam04(含充電線組)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device05": {
+            "name": "samsung手機Sam05(含充電線組)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device06": {
+            "name": "samsung手機Sam06(含充電線組)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device07": {
+            "name": "samsung手機Sam07(含充電線組)",
+            "borrowed": false,
+            "note": "sam07盒子裡面裝的是手機sam17"
+        },
+        "device08": {
+            "name": "samsung手機Sam08",
+            "borrowed": false,
+            "note": "朝陽老師借用(20231015確認)"
+        },
+        "device09": {
+            "name": "samsung手機Sam09(含充電線組)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device10": {
+            "name": "samsung手機Sam10(含充電線組)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device11": {
+            "name": "samsung手機Sam11(含充電線組)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device12": {
+            "name": "samsung手機Sam12",
+            "borrowed": false,
+            "note": "令勤老師借用(20231015確認)"
+        },
+        "device13": {
+            "name": "samsung手機Sam13(含充電線組)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device14": {
+            "name": "samsung手機Sam14(含充電線組)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device15": {
+            "name": "samsung手機Sam15",
+            "borrowed": false,
+            "note": ""
+        },
+        "device16": {
+            "name": "samsung手機Sam16",
+            "borrowed": false,
+            "note": ""
+        },
+        "device17": {
+            "name": "samsung手機Sam17",
+            "borrowed": false,
+            "note": "失蹤。最後一次紀錄為50401丁竣修借走，無歸還紀錄，202310月詢問十，該生回答已歸還。"
+        },
+        "device18": {
+            "name": "samsung手機Sam18",
+            "borrowed": false,
+            "note": ""
+        },
+        "device19": {
+            "name": "samsung手機Sam19",
+            "borrowed": false,
+            "note": "失蹤。無紀錄。"
+        },
+        "device20": {
+            "name": "samsung手機Sam20",
+            "borrowed": false,
+            "note": "文聰老師借用(20231015確認)"
+        },
+        "device21": {
+            "name": "ulanzi迷你三腳架12個(可接相機等)",
+            "borrowed": false,
+            "note": "貼藍色圓形標籤1~11，另有3個放在360度攝影機盒中"
+        },
+        "device22": {
+            "name": "ANKER 10連接埠充電器",
+            "borrowed": false,
+            "note": ""
+        },
+        "device23": {
+            "name": "Insta360度環景攝影機1",
+            "borrowed": false,
+            "note": "充電線不見了、附備用電池一顆、小腳架"
+        },
+        "device24": {
+            "name": "Insta360度環景攝影機2",
+            "borrowed": false,
+            "note": "充電線不見了、附備用電池一顆、小腳架"
+        },
+        "device25": {
+            "name": "Insta360度環景攝影機3",
+            "borrowed": false,
+            "note": "附充電線、小腳架"
+        },
+        "device26": {
+            "name": "Insta360自拍桿3支",
+            "borrowed": false,
+            "note": "一支只剩盒子"
+        },
+        "device27": {
+            "name": "三軸穩定器GIN1",
+            "borrowed": false,
+            "note": "大灣學外拍用"
+        },
+        "device28": {
+            "name": "三軸穩定器GIN2",
+            "borrowed": false,
+            "note": ""
+        },
+        "device29": {
+            "name": "三軸穩定器GIN3",
+            "borrowed": false,
+            "note": ""
+        },
+        "device30": {
+            "name": "三軸穩定器GIN4",
+            "borrowed": false,
+            "note": ""
+        },
+        "device31": {
+            "name": "三軸穩定器GIN5",
+            "borrowed": false,
+            "note": ""
+        },
+        "device32": {
+            "name": "三軸穩定器GIN6",
+            "borrowed": false,
+            "note": ""
+        },
+        "device33": {
+            "name": "三軸穩定器GIN7",
+            "borrowed": false,
+            "note": ""
+        },
+        "device34": {
+            "name": "三軸穩定器GIN8",
+            "borrowed": false,
+            "note": ""
+        },
+        "device35": {
+            "name": "三軸穩定器GIN9",
+            "borrowed": false,
+            "note": ""
+        },
+        "device36": {
+            "name": "三軸穩定器GIN10",
+            "borrowed": false
+        },
+        "device37": {
+            "name": "各種線材、轉接頭",
+            "borrowed": false,
+            "note": "HDMI線、各種電源線、音源線、micro-USB線、miniUSB線、typeC-VGA線"
+        },
+        "device38": {
+            "name": "國文科簡報筆3支",
+            "borrowed": false,
+            "note": "一隻灰色兩隻黑色，使用後放回來請記得拔電池"
+        },
+        "device39": {
+            "name": "nitecore充電電池充電座3台",
+            "borrowed": false,
+            "note": "可用規格:AA、AAA、AAAA、C可用材質:鋰電池、鎳氫、鎳鎘"
+        },
+        "device40": {
+            "name": "雜物盒",
+            "borrowed": false,
+            "note": "不知名遙控器、手機附贈耳機、miniSD卡一張"
+        },
+        "device41": {
+            "name": "AKG K99監聽耳機",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點在圖書館3F"
+        },
+        "device42": {
+            "name": "AKG K99監聽耳機",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點在圖書館3F"
+        },
+        "device43": {
+            "name": "logi攝影機4台(電腦視訊用)",
+            "borrowed": false,
+            "note": "1台較舊(球型)3台較新(HD1080p)"
+        },
+        "device44": {
+            "name": "JVC攝影機",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點在教務處"
+        },
+        "device45": {
+            "name": "JVC攝影機",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點在教務處"
+        },
+        "device46": {
+            "name": "JVC攝影機",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點在教務處"
+        },
+        "device47": {
+            "name": "JVC攝影機",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點在教務處"
+        },
+        "device48": {
+            "name": "JVC攝影機",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點在教務處"
+        },
+        "device49": {
+            "name": "JVC攝影機",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點在教務處"
+        },
+        "device50": {
+            "name": "SONY數位攝影機HXR-NX30N",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點寫鄭博仁"
+        },
+        "device51": {
+            "name": "OBSBOT雲台攝影機(追焦)",
+            "borrowed": false,
+            "note": "直播教學可用"
+        },
+        "device52": {
+            "name": "SONY數位相機ZV-E10",
+            "borrowed": false,
+            "note": ""
+        },
+        "device53": {
+            "name": "TELLO空拍機TEL01",
+            "borrowed": false,
+            "note": ""
+        },
+        "device54": {
+            "name": "TELLO空拍機TEL02",
+            "borrowed": false,
+            "note": ""
+        },
+        "device55": {
+            "name": "TELLO空拍機TEL03",
+            "borrowed": false,
+            "note": ""
+        },
+        "device56": {
+            "name": "TELLO空拍機TEL04",
+            "borrowed": false,
+            "note": ""
+        },
+        "device57": {
+            "name": "TELLO空拍機TEL05",
+            "borrowed": false,
+            "note": ""
+        },
+        "device58": {
+            "name": "雜物籃",
+            "borrowed": false,
+            "note": "空拍機電池、JVC攝影機電池、dji電池與充電線、攝影機雲台支架(小)、空拍機扇葉、空拍機漿葉保護罩"
+        },
+        "device59": {
+            "name": "ATEM Mini Pro ISO現場製作切換台",
+            "borrowed": false,
+            "note": "沒看到財產標籤，只貼了｢109高優購置"
+        },
+        "device60": {
+            "name": "DEITY攝影機用麥克風",
+            "borrowed": false,
+            "note": ""
+        },
+        "device61": {
+            "name": "SONY電腦迷你麥克風",
+            "borrowed": false,
+            "note": ""
+        },
+        "device62": {
+            "name": "SHURE指向型麥克風SM58S",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點在圖書館3F"
+        },
+        "device63": {
+            "name": "SHURE指向型麥克風SM58S",
+            "borrowed": false,
+            "note": "財產標籤貼紙上地點在圖書館3F"
+        },
+        "device64": {
+            "name": "saramonic1對1手持麥克風",
+            "borrowed": false,
+            "note": "國文科高優購買(接收器在盒子哩，另有一支無線麥克風)"
+        },
+        "device65": {
+            "name": "BOYA1對2麥克風",
+            "borrowed": false,
+            "note": "國文科高優購買"
+        },
+        "device66": {
+            "name": "RODE領夾式麥克風(可接手機)5盒",
+            "borrowed": false,
+            "note": ""
+        },
+        "device67": {
+            "name": "Alctron麥克風UM900",
+            "borrowed": false,
+            "note": "婷如採購"
+        },
+        "device68": {
+            "name": "POP SHIELD 雙層錄音防噴罩",
+            "borrowed": false,
+            "note": "婷如採購"
+        },
+        "device69": {
+            "name": "國文科搶答玲(10個按鈴)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device70": {
+            "name": "國文科搶答玲(10個按鈴)",
+            "borrowed": false,
+            "note": ""
+        },
+        "device71": {
+            "name": "Aver追焦攝影鏡(電腦視訊用)",
+            "borrowed": false,
+            "note": ""
+        }
+    }
+}
