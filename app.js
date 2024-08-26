@@ -80,7 +80,10 @@ function updateDevices() {
 }
 
 function borrowDevice(deviceId) {
-    const borrowClass = prompt("請輸入借閱班級：");
+    const a = prompt("請輸入班級：");
+    const b = prompt("請輸入座號：");
+    const c = prompt("請輸入姓名：");
+    const borrowClass = a + b + c;
     if (borrowClass) {
         const now = new Date();
         const borrowTime = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
