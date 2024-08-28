@@ -91,7 +91,12 @@ function updateDevices() {
             const actionCell = row.insertCell(5);
             const actionButton = document.createElement('button');
             actionButton.textContent = device.borrowed ? '歸還' : '借出';
-            actionButton.onclick = () => device.borrowed ? returnDevice(id) : borrowDevice(id);
+            
+            // 修改這裡：檢查是否為借出者或特權用戶
+            const canReturn = device.borrowed && (device.borrowClass.startsWith(currentUser) || privilegedUsers.includes(currentUser));
+            actionButton.onclick = () => device.borrowed ? (canReturn ? returnDevice(id) : alert('只有借出者或管理員可以歸還')) : borrowDevice(id);
+            actionButton.disabled = device.borrowed && !canReturn;
+            
             actionCell.appendChild(actionButton);
 
             // 為特權用戶添加備註按鈕
@@ -124,10 +129,18 @@ function borrowDevice(deviceId) {
 }
 
 function returnDevice(deviceId) {
-    updateDevice(deviceId, {
-        borrowed: false, 
-        borrowClass: '',
-        borrowTime: ''
+    const deviceRef = database.ref(`devices/${deviceId}`);
+    deviceRef.once('value').then((snapshot) => {
+        const device = snapshot.val();
+        if (device.borrowClass.startsWith(currentUser) || privilegedUsers.includes(currentUser)) {
+            updateDevice(deviceId, {
+                borrowed: false, 
+                borrowClass: '',
+                borrowTime: ''
+            });
+        } else {
+            alert('只有借出者或管理員可以歸還設備');
+        }
     });
 }
 
