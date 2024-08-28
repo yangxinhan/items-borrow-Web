@@ -61,7 +61,7 @@ function showApp() {
 function updateCurrentUserDisplay() {
     const userDisplayElement = document.getElementById('currentUserDisplay');
     if (currentUser) {
-        userDisplayElement.textContent = `當前用戶: ${currentUser}`;
+        userDisplayElement.textContent = `使用者: ${currentUser}`;
     } else {
         userDisplayElement.textContent = '';
     }
