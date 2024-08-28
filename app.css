@@ -1,3 +1,11 @@
+/* body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
 body {
     background-color: #bdc2c5;
     font-family: Arial,sans-serif;
@@ -8,12 +16,13 @@ body {
 table { 
     border-collapse: collapse; 
     width: 100%;
+    
 }
 
 th, td { 
     border: 1px solid #ddd; 
     padding: 8px; 
-    text-align: left; 
+    text-align: center; 
 }
 
 th { 
@@ -23,4 +32,61 @@ th {
 button { 
     cursor: pointer; 
     background-color: #edf3f7;
+}
+
+#loginSection {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#loginSection input, #loginSection button {
+    width: 200px;
+    padding: 8px;
+}
+
+.login-container {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 300px; /* 設定一個固定寬度 */
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+}
+
+.login-container input, 
+.login-container button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.login-container button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    background-color: #45a049;
 }
