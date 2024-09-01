@@ -17,6 +17,7 @@
     <div id="appSection" style="display: none;">
         <h1>裝置借用狀態</h1>
         <div id="currentUserDisplay"></div>
+        <button id="historyButton" onclick="showHistory()">查看借閱歷史</button>
         <button onclick="logout()">登出</button>
         <table id="deviceTable">
             <tr>
@@ -28,6 +29,21 @@
                 <th>操作</th>
             </tr>
         </table>
+        
+    </div>
+
+    <div id="historySection" style="display: none;">
+        <h2>借閱歷史記錄</h2>
+        <button onclick="showApp()">返回主頁</button>
+        <table id="historyTable">
+            <tr>
+                <th>設備ID</th>
+                <th>借用者</th>
+                <th>借出時間</th>
+                <th>歸還時間</th>
+            </tr>
+        </table>
+        
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
