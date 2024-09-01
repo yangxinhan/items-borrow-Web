@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 let currentUser = null;
-const privilegedUsers = ['teacher', 'yang']; // 特權用戶列表
+const privilegedUsers = ['teacher', 'yang']; //管理員
 
 function login() {
     const email = document.getElementById('emailInput').value;
@@ -28,7 +28,7 @@ function login() {
                 // 登入成功
                 currentUser = email;
                 showApp();
-                updateCurrentUserDisplay(); // 新增：更新當前用戶顯示
+                updateCurrentUserDisplay(); // 更新當前用戶顯示
             } else {
                 alert('登入失敗: 帳號或密碼錯誤');
             }
@@ -42,7 +42,7 @@ function login() {
 function logout() {
     currentUser = null;
     showLogin();
-    updateCurrentUserDisplay(); // 新增：更新當前用戶顯示（清空）
+    updateCurrentUserDisplay(); // 更新當前用戶顯示（清空）
 }
 
 function showLogin() {
@@ -53,11 +53,44 @@ function showLogin() {
 function showApp() {
     document.getElementById('loginSection').style.display = 'none';
     document.getElementById('appSection').style.display = 'block';
+    document.getElementById('historySection').style.display = 'none';
     updateDevices();
-    updateCurrentUserDisplay(); // 新增：更新當前用戶顯示
+    updateCurrentUserDisplay();
 }
 
-// 新增：更新當前用戶顯示的函數
+
+function showHistory() {
+    if (privilegedUsers.includes(currentUser)) {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('appSection').style.display = 'none';
+        document.getElementById('historySection').style.display = 'block';
+        loadBorrowHistory();
+    } else {
+        alert('只有管理員可以查看借閱歷史');
+    }
+}
+
+function loadBorrowHistory() {
+    const historyTable = document.getElementById('historyTable');
+    // 清除舊的行，保留表頭
+    while (historyTable.rows.length > 1) {
+        historyTable.deleteRow(1);
+    }
+
+    const recordsRef = database.ref('borrowRecords');
+    recordsRef.orderByChild('borrowTime').once('value', (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            const record = childSnapshot.val();
+            const row = historyTable.insertRow();
+            row.insertCell(0).textContent = record.deviceId;
+            row.insertCell(1).textContent = record.borrower;
+            row.insertCell(2).textContent = record.borrowTime;
+            row.insertCell(3).textContent = record.returnTime || '尚未歸還';
+        });
+    });
+}
+
+// 更新當前用戶顯示的函數
 function updateCurrentUserDisplay() {
     const userDisplayElement = document.getElementById('currentUserDisplay');
     if (currentUser) {
@@ -79,7 +112,7 @@ function updateDevices() {
         while (table.rows.length > 1) {
             table.deleteRow(1);
         }
-        // 添加新的行
+        // 添加物品
         for (const [id, device] of Object.entries(devices)) {
             const row = table.insertRow();
             row.insertCell(0).textContent = device.name;
@@ -92,14 +125,14 @@ function updateDevices() {
             const actionButton = document.createElement('button');
             actionButton.textContent = device.borrowed ? '歸還' : '借出';
             
-            // 修改這裡：檢查是否為借出者或特權用戶
+            // 修改這裡：檢查是否為借出者或管理員
             const canReturn = device.borrowed && (device.borrowClass.startsWith(currentUser) || privilegedUsers.includes(currentUser));
             actionButton.onclick = () => device.borrowed ? (canReturn ? returnDevice(id) : alert('只有借出者或管理員可以歸還')) : borrowDevice(id);
             actionButton.disabled = device.borrowed && !canReturn;
             
             actionCell.appendChild(actionButton);
 
-            // 為特權用戶添加備註按鈕
+            // 為管理員添加備註按鈕
             if (privilegedUsers.includes(currentUser)) {
                 const noteButton = document.createElement('button');
                 noteButton.textContent = '添加備註';
@@ -123,6 +156,8 @@ function borrowDevice(deviceId) {
             borrowClass: borrowClass,
             borrowTime: borrowTime
         });
+        // 添加借閱記錄
+        addBorrowRecord(deviceId, borrowClass, borrowTime);
     } else if (borrowClass !== null) {
         alert('請輸入有效的班級名稱');
     }
@@ -133,11 +168,14 @@ function returnDevice(deviceId) {
     deviceRef.once('value').then((snapshot) => {
         const device = snapshot.val();
         if (device.borrowClass.startsWith(currentUser) || privilegedUsers.includes(currentUser)) {
+            const returnTime = new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
             updateDevice(deviceId, {
                 borrowed: false, 
                 borrowClass: '',
                 borrowTime: ''
             });
+            // 更新借閱記錄的歸還時間
+            updateBorrowRecord(deviceId, device.borrowClass, device.borrowTime, returnTime);
         } else {
             alert('只有借出者或管理員可以歸還設備');
         }
@@ -154,4 +192,28 @@ function addNote(deviceId) {
     if (note !== null) {
         updateDevice(deviceId, { note: note });
     }
+}
+
+// 添加新的借閱記錄
+function addBorrowRecord(deviceId, borrower, borrowTime) {
+    const recordRef = database.ref('borrowRecords').push();
+    recordRef.set({
+        deviceId: deviceId,
+        borrower: borrower,
+        borrowTime: borrowTime,
+        returnTime: ''
+    });
+}
+
+// 更新借閱記錄的歸還時間
+function updateBorrowRecord(deviceId, borrower, borrowTime, returnTime) {
+    const recordsRef = database.ref('borrowRecords');
+    recordsRef.orderByChild('deviceId').equalTo(deviceId).once('value', (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            const record = childSnapshot.val();
+            if (record.borrower === borrower && record.borrowTime === borrowTime && record.returnTime === '') {
+                childSnapshot.ref.update({ returnTime: returnTime });
+            }
+        });
+    });
 }
