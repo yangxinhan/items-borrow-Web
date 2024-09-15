@@ -125,7 +125,7 @@ function updateDevices() {
             const actionButton = document.createElement('button');
             actionButton.textContent = device.borrowed ? '歸還' : '借出';
             
-            // 修改這裡：檢查是否為借出者或管理員
+            // 檢查是否為借出者或管理員
             const canReturn = device.borrowed && (device.borrowClass.startsWith(currentUser) || privilegedUsers.includes(currentUser));
             actionButton.onclick = () => device.borrowed ? (canReturn ? returnDevice(id) : alert('只有借出者或管理員可以歸還')) : borrowDevice(id);
             actionButton.disabled = device.borrowed && !canReturn;
