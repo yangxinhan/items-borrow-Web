@@ -42,7 +42,7 @@ function login() {
 function logout() {
     currentUser = null;
     showLogin();
-    updateCurrentUserDisplay(); // 更新當前用戶顯示（清空）
+    updateCurrentUserDisplay(); // 更新當前用戶顯示
 }
 
 function showLogin() {
