@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 let currentUser = null;
-const privilegedUsers = ['teacher', 'yang']; //管理員
+const privilegedUsers = ['teacher', 'yang', 'test']; //管理員
 
 function login() {
     const email = document.getElementById('emailInput').value;
