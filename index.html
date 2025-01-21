@@ -3,52 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>裝置借用狀態</title>
+    <title>裝置借用系統</title>
     <link rel="stylesheet" href="app.css">
 </head>
 <body>
-    <div id="loginSection">
-        <h2>登入</h2>
-        <input type="email" id="emailInput" placeholder="帳號">
-        <input type="password" id="passwordInput" placeholder="密碼">
-        <button onclick="login()">登入</button>
-    </div>
+    <div id="appSection">
+        <header>
+            <h1>裝置借用系統</h1>
+            <div class="header-buttons">
+                <button id="scanButton" class="primary-button">掃描借用</button>
+                <button id="returnButton" class="warning-button" onclick="toggleReturnScanner()">掃描歸還</button>
+                <button id="historyButton" class="secondary-button" onclick="showHistory()">借閱歷史</button>
+            </div>
+        </header>
 
-    <div id="appSection" style="display: none;">
-        <h1>裝置借用狀態</h1>
-        <div id="currentUserDisplay"></div>
-        <button id="historyButton" onclick="showHistory()">查看借閱歷史</button>
-        <button onclick="logout()">登出</button>
-        <table id="deviceTable">
-            <tr>
-                <th>裝置名稱</th>
-                <th>借出狀態</th>
-                <th>借閱人</th>
-                <th>時間</th>
-                <th>物品備註</th>
-                <th>操作</th>
-            </tr>
-        </table>
-        
+        <div class="category-container">
+            <div class="category-buttons">
+                <button class="category-button active" data-category="all">全部</button>
+                <button class="category-button" data-category="phone">手機</button>
+                <button class="category-button" data-category="camera">攝影</button>
+                <button class="category-button" data-category="audio">音響</button>
+                <button class="category-button" data-category="drone">空拍</button>
+                <button class="category-button" data-category="misc">其他</button>
+            </div>
+        </div>
+
+        <div id="returnScannerSection" style="display: none;">
+            <div class="scanner-container">
+                <h2>請掃描設備借閱ID進行歸還</h2>
+                <input type="text" id="returnBarcodeInput" placeholder="設備借閱ID" autofocus>
+            </div>
+        </div>
+
+        <div id="scannerSection" style="display: none;">
+            <div class="scanner-container">
+                <div id="deviceScanStep">
+                    <h2>步驟1：請掃描裝置條碼</h2>
+                    <input type="text" id="barcodeInput" placeholder="裝置條碼輸入區" autofocus>
+                </div>
+                <div id="studentScanStep" style="display: none;">
+                    <h2>步驟2：請輸入學號</h2>
+                    <input type="text" id="studentInput" placeholder="請輸入學號" autofocus>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="deviceTable">
+                <tr>
+                    <th>裝置名稱</th>
+                    <th>借出狀態</th>
+                    <th>借閱人</th>
+                    <th>時間</th>
+                    <th>物品備註</th>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <div id="historySection" style="display: none;">
-        <h2>借閱歷史記錄</h2>
-        <button onclick="showApp()">返回主頁</button>
-        <table id="historyTable">
-            <tr>
-                <th>設備ID</th>
-                <th>借用者</th>
-                <th>借出時間</th>
-                <th>歸還時間</th>
-            </tr>
-        </table>
-        
+        <header>
+            <h2>借閱歷史記錄</h2>
+            <div class="header-buttons">
+                <button class="secondary-button" onclick="showApp()">返回主頁</button>
+            </div>
+        </header>
+        <div class="table-container">
+            <table id="historyTable">
+                <tr>
+                    <th>設備名稱</th>
+                    <th>借用者</th>
+                    <th>借出時間</th>
+                    <th>歸還時間</th>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="app.js"></script>
-    
 </body>
 </html>

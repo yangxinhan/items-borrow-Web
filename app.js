@@ -17,26 +17,133 @@ const database = firebase.database();
 let currentUser = null;
 const privilegedUsers = ['teacher', 'yang', 'test']; //管理員
 
-function login() {
-    const email = document.getElementById('emailInput').value;
-    const password = document.getElementById('passwordInput').value;
-    
-    // 從數據庫中檢查用戶
-    database.ref('users/' + email.replace('.', ',')).once('value')
-        .then((snapshot) => {
-            if (snapshot.exists() && snapshot.val() === password) {
-                // 登入成功
-                currentUser = email;
-                showApp();
-                updateCurrentUserDisplay(); // 更新當前用戶顯示
+let scannerMode = false;
+let currentDeviceId = null;
+
+let returnScannerMode = false;
+
+document.getElementById('scanButton').addEventListener('click', toggleScanner);
+document.getElementById('barcodeInput').addEventListener('keypress', handleBarcodeScan);
+document.getElementById('studentInput').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        const studentId = event.target.value;
+        processStudentId(studentId);
+        event.target.value = '';
+    }
+});
+// 移除手動輸入按鈕的監聽器
+// document.getElementById('manualInputBtn').addEventListener('click', function() {...});
+
+// 新增歸還掃描器相關事件監聽
+document.getElementById('returnBarcodeInput').addEventListener('keypress', handleReturnBarcodeScan);
+
+// 新增分類常數
+const CATEGORIES = {
+    PHONE: { id: 'phone', name: '手機設備', pattern: /^SAM\d{3}$/ },
+    CAMERA: { id: 'camera', name: '攝影設備', pattern: /^(SONY|JVC|INSTA|OBSBOT)\d{3}$/ },
+    AUDIO: { id: 'audio', name: '音響設備', pattern: /^(SHURE|RODE|BOYA|SARAMONIC|ALCTRON)\d{3}$/ },
+    DRONE: { id: 'drone', name: '空拍設備', pattern: /^TELLO\d{3}$/ },
+    MISC: { id: 'misc', name: '其他設備', pattern: /^(MISC|ULANZI|ANKER|GIN|CABLE|PEN|NITECORE|AKG|BELL|AVER)\d{3}$/ }
+};
+
+let currentCategory = 'all';
+
+// 添加分類按鈕事件監聽
+document.querySelectorAll('.category-button').forEach(button => {
+    button.addEventListener('click', () => {
+        document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentCategory = button.dataset.category;
+        updateDevices();
+    });
+});
+
+function toggleScanner() {
+    scannerMode = !scannerMode;
+    document.getElementById('scannerSection').style.display = scannerMode ? 'block' : 'none';
+    document.getElementById('returnScannerSection').style.display = 'none'; // 確保歸還區域關閉
+    document.getElementById('scanButton').textContent = scannerMode ? '關閉掃描' : '掃描借用';
+    if (scannerMode) {
+        resetScannerState();
+    }
+}
+
+function resetScannerState() {
+    currentDeviceId = null;
+    document.getElementById('deviceScanStep').style.display = 'block';
+    document.getElementById('studentScanStep').style.display = 'none';
+    document.getElementById('barcodeInput').value = '';
+    document.getElementById('studentInput').value = '';
+    document.getElementById('barcodeInput').focus();
+}
+
+function handleBarcodeScan(event) {
+    if (event.key === 'Enter') {
+        const barcode = event.target.value;
+        if (!currentDeviceId) {
+            processDeviceBarcode(barcode);
+        }
+        event.target.value = '';
+    }
+}
+
+function processDeviceBarcode(barcode) {
+    const deviceRef = database.ref('devices');
+    deviceRef.orderByChild('borrowId').equalTo(barcode).once('value', (snapshot) => {
+        if (snapshot.exists()) {
+            const deviceId = Object.keys(snapshot.val())[0];
+            const device = snapshot.val()[deviceId];
+            
+            if (device.borrowed) {
+                returnDevice(deviceId);
+                resetScannerState();
+                closeScanners(); // 使用新函數關閉所有掃描區域
             } else {
-                alert('登入失敗: 帳號或密碼錯誤');
+                currentDeviceId = deviceId;
+                document.getElementById('deviceScanStep').style.display = 'none';
+                document.getElementById('studentScanStep').style.display = 'block';
+                document.getElementById('studentInput').focus();
             }
-        })
-        .catch((error) => {
-            console.error('登入錯誤:', error);
-            alert('登入失敗: ' + error.message);
-        });
+        } else {
+            alert('找不到此條碼對應的設備');
+            resetScannerState();
+        }
+    });
+}
+
+function processStudentId(studentId) {
+    if (!currentDeviceId) {
+        alert('請先掃描裝置條碼');
+        return;
+    }
+
+    // 驗證學號格式
+    if (studentId.length < 5) {
+        alert('請輸入有效的學號');
+        return;
+    }
+
+    // 直接使用學號作為借用者資訊
+    borrowDevice(currentDeviceId, studentId);
+    resetScannerState();
+    closeScanners(); // 使用新函數關閉所有掃描區域
+}
+
+function showApp() {
+    document.getElementById('appSection').style.display = 'block';
+    document.getElementById('historySection').style.display = 'none';
+    updateDevices();
+}
+
+function borrowDevice(deviceId, borrower) {
+    const now = new Date();
+    const borrowTime = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+    updateDevice(deviceId, {
+        borrowed: true,
+        borrowClass: borrower,
+        borrowTime: borrowTime
+    });
+    addBorrowRecord(deviceId, borrower, borrowTime);
 }
 
 function logout() {
@@ -50,42 +157,60 @@ function showLogin() {
     document.getElementById('appSection').style.display = 'none';
 }
 
-function showApp() {
-    document.getElementById('loginSection').style.display = 'none';
-    document.getElementById('appSection').style.display = 'block';
-    document.getElementById('historySection').style.display = 'none';
-    updateDevices();
-    updateCurrentUserDisplay();
-}
-
-
 function showHistory() {
-    if (privilegedUsers.includes(currentUser)) {
-        document.getElementById('loginSection').style.display = 'none';
-        document.getElementById('appSection').style.display = 'none';
-        document.getElementById('historySection').style.display = 'block';
-        loadBorrowHistory();
-    } else {
-        alert('只有管理員可以查看借閱歷史');
-    }
+    document.getElementById('appSection').style.display = 'none';
+    document.getElementById('historySection').style.display = 'block';
+    setupLiveHistoryUpdates();
 }
 
-function loadBorrowHistory() {
+function setupLiveHistoryUpdates() {
     const historyTable = document.getElementById('historyTable');
-    // 清除舊的行，保留表頭
-    while (historyTable.rows.length > 1) {
-        historyTable.deleteRow(1);
-    }
-
     const recordsRef = database.ref('borrowRecords');
-    recordsRef.orderByChild('borrowTime').once('value', (snapshot) => {
+    
+    recordsRef.orderByChild('borrowTime').on('value', (snapshot) => {
+        while (historyTable.rows.length > 1) {
+            historyTable.deleteRow(1);
+        }
+
+        const records = [];
         snapshot.forEach((childSnapshot) => {
-            const record = childSnapshot.val();
-            const row = historyTable.insertRow();
-            row.insertCell(0).textContent = record.deviceId;
-            row.insertCell(1).textContent = record.borrower;
-            row.insertCell(2).textContent = record.borrowTime;
-            row.insertCell(3).textContent = record.returnTime || '尚未歸還';
+            records.push({
+                id: childSnapshot.key,
+                ...childSnapshot.val()
+            });
+        });
+        records.reverse();
+
+        const devicePromises = records.map(record => 
+            database.ref(`devices/${record.deviceId}`).once('value')
+        );
+
+        Promise.all(devicePromises).then(deviceSnapshots => {
+            const deviceCache = {};
+            deviceSnapshots.forEach((snapshot, index) => {
+                const device = snapshot.val();
+                if (device) {
+                    deviceCache[records[index].deviceId] = `${device.borrowId} - ${device.name}`;
+                }
+            });
+
+            records.forEach(record => {
+                const row = historyTable.insertRow();
+                const deviceName = deviceCache[record.deviceId] || record.deviceId;
+                row.insertCell(0).textContent = deviceName;
+                row.insertCell(1).textContent = record.borrower;
+                
+                // 直接使用 Firebase 中的時間
+                row.insertCell(2).textContent = record.borrowTime;
+                
+                const returnTimeCell = row.insertCell(3);
+                if (record.returnTime) {
+                    returnTimeCell.textContent = record.returnTime;
+                } else {
+                    returnTimeCell.textContent = '尚未歸還';
+                    returnTimeCell.className = 'status-borrowed';
+                }
+            });
         });
     });
 }
@@ -100,85 +225,66 @@ function updateCurrentUserDisplay() {
     }
 }
 
-// 初始顯示登入界面
-showLogin();
+// 初始顯示主頁面
+showApp();
 
+// 修改 updateDevices 函數以支援分類
 function updateDevices() {
     const devicesRef = database.ref('devices');
-    devicesRef.on('value', (snapshot) => {
+    devicesRef.once('value', (snapshot) => {
         const devices = snapshot.val();
         const table = document.getElementById('deviceTable');
-        // 清除舊的行,保留表頭
+        
         while (table.rows.length > 1) {
             table.deleteRow(1);
         }
-        // 添加物品
-        for (const [id, device] of Object.entries(devices)) {
+        
+        const sortedDevices = Object.entries(devices)
+            .map(([id, device]) => ({id, ...device}))
+            .filter(device => {
+                if (currentCategory === 'all') return true;
+                return getCategoryById(device.borrowId) === currentCategory;
+            })
+            .sort((a, b) => a.borrowId.localeCompare(b.borrowId));
+
+        sortedDevices.forEach(device => {
             const row = table.insertRow();
-            row.insertCell(0).textContent = device.name;
-            row.insertCell(1).textContent = device.borrowed ? '已借出' : '可借用';
+            row.insertCell(0).textContent = `${device.borrowId} - ${device.name}`;
+            
+            const statusCell = row.insertCell(1);
+            statusCell.textContent = device.borrowed ? '已借出' : '可借用';
+            statusCell.className = device.borrowed ? 'status-borrowed' : 'status-available';
+            
             row.insertCell(2).textContent = device.borrowClass || '';
             row.insertCell(3).textContent = device.borrowTime || '';
             row.insertCell(4).textContent = device.note || '';
-            
-            const actionCell = row.insertCell(5);
-            const actionButton = document.createElement('button');
-            actionButton.textContent = device.borrowed ? '歸還' : '借出';
-            
-            // 檢查是否為借出者或管理員
-            const canReturn = device.borrowed && (device.borrowClass.startsWith(currentUser) || privilegedUsers.includes(currentUser));
-            actionButton.onclick = () => device.borrowed ? (canReturn ? returnDevice(id) : alert('只有借出者或管理員可以歸還')) : borrowDevice(id);
-            actionButton.disabled = device.borrowed && !canReturn;
-            
-            actionCell.appendChild(actionButton);
-
-            // 為管理員添加備註按鈕
-            if (privilegedUsers.includes(currentUser)) {
-                const noteButton = document.createElement('button');
-                noteButton.textContent = '添加備註';
-                noteButton.onclick = () => addNote(id);
-                actionCell.appendChild(noteButton);
-            }
-        }
+        });
     });
 }
 
-function borrowDevice(deviceId) {
-    const className = `${currentUser}`;
-    const classNumber = prompt("請輸入座號：");
-    const name = prompt("請輸入姓名：");
-    const borrowClass = className + " " + classNumber + " " + name;
-    if (borrowClass) {
-        const now = new Date();
-        const borrowTime = now.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
-        updateDevice(deviceId, {
-            borrowed: true, 
-            borrowClass: borrowClass,
-            borrowTime: borrowTime
-        });
-        // 添加借閱記錄
-        addBorrowRecord(deviceId, borrowClass, borrowTime);
-    } else if (borrowClass !== null) {
-        alert('請輸入有效的班級名稱');
+// 根據借閱ID判斷分類
+function getCategoryById(borrowId) {
+    for (const category of Object.values(CATEGORIES)) {
+        if (category.pattern.test(borrowId)) {
+            return category.id;
+        }
     }
+    return 'misc';
 }
 
 function returnDevice(deviceId) {
     const deviceRef = database.ref(`devices/${deviceId}`);
     deviceRef.once('value').then((snapshot) => {
         const device = snapshot.val();
-        if (device.borrowClass.startsWith(currentUser) || privilegedUsers.includes(currentUser)) {
-            const returnTime = new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
-            updateDevice(deviceId, {
-                borrowed: false, 
-                borrowClass: '',
-                borrowTime: ''
-            });
-            // 更新借閱記錄的歸還時間
-            updateBorrowRecord(deviceId, device.borrowClass, device.borrowTime, returnTime);
-        } else {
-            alert('只有借出者或管理員可以歸還設備');
-        }
+        const returnTime = new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+        updateDevice(deviceId, {
+            borrowed: false, 
+            borrowClass: '',
+            borrowTime: ''
+        });
+        // 更新借閱記錄的歸還時間
+        updateBorrowRecord(deviceId, device.borrowClass, device.borrowTime, returnTime);
+        alert('設備歸還成功！');
     });
 }
 
@@ -217,3 +323,42 @@ function updateBorrowRecord(deviceId, borrower, borrowTime, returnTime) {
         });
     });
 }
+
+function toggleReturnScanner() {
+    returnScannerMode = !returnScannerMode;
+    const scannerSection = document.getElementById('returnScannerSection');
+    scannerSection.style.display = returnScannerMode ? 'block' : 'none';
+    document.getElementById('scannerSection').style.display = 'none'; // 確保借用區域關閉
+    if (returnScannerMode) {
+        document.getElementById('returnBarcodeInput').value = '';
+        document.getElementById('returnBarcodeInput').focus();
+    }
+}
+
+function handleReturnBarcodeScan(event) {
+    if (event.key === 'Enter') {
+        const barcode = event.target.value;
+        processDeviceBarcode(barcode); // 使用相同的處理函數
+        event.target.value = '';
+    }
+}
+
+function closeScanners() {
+    // 關閉所有掃描區域
+    document.getElementById('scannerSection').style.display = 'none';
+    document.getElementById('returnScannerSection').style.display = 'none';
+    document.getElementById('scanButton').textContent = '掃描借用';
+    scannerMode = false;
+    returnScannerMode = false;
+}
+
+// 添加分類按鈕事件監聽
+document.querySelectorAll('.category-button').forEach(button => {
+    button.addEventListener('click', () => {
+        document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentCategory = button.dataset.category;
+        updateDevices();
+    });
+});
+
