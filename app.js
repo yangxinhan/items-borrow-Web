@@ -127,6 +127,9 @@ function processStudentId(studentId) {
     borrowDevice(currentDeviceId, studentId);
     resetScannerState();
     closeScanners(); // 使用新函數關閉所有掃描區域
+    setTimeout(() => {
+        location.reload(); // 借用成功後重整頁面
+    }, 1000);
 }
 
 function showApp() {
@@ -285,6 +288,9 @@ function returnDevice(deviceId) {
         // 更新借閱記錄的歸還時間
         updateBorrowRecord(deviceId, device.borrowClass, device.borrowTime, returnTime);
         alert('設備歸還成功！');
+        setTimeout(() => {
+            location.reload(); // 歸還成功後重整頁面
+        }, 1000);
     });
 }
 
