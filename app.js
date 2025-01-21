@@ -127,9 +127,8 @@ function processStudentId(studentId) {
     borrowDevice(currentDeviceId, studentId);
     resetScannerState();
     closeScanners(); // 使用新函數關閉所有掃描區域
-    setTimeout(() => {
-        location.reload(); // 借用成功後重整頁面
-    }, 1000);
+    // 立即更新畫面
+    updateDevices();
 }
 
 function showApp() {
@@ -280,23 +279,32 @@ function returnDevice(deviceId) {
     deviceRef.once('value').then((snapshot) => {
         const device = snapshot.val();
         const returnTime = new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
-        updateDevice(deviceId, {
-            borrowed: false, 
-            borrowClass: '',
-            borrowTime: ''
+        
+        Promise.all([
+            updateDevice(deviceId, {
+                borrowed: false, 
+                borrowClass: '',
+                borrowTime: ''
+            }),
+            updateBorrowRecord(deviceId, device.borrowClass, device.borrowTime, returnTime)
+        ]).then(() => {
+            alert('設備歸還成功！');
+            // 立即更新所有相關畫面
+            updateDevices();
+            if (document.getElementById('historySection').style.display !== 'none') {
+                setupLiveHistoryUpdates();
+            }
         });
-        // 更新借閱記錄的歸還時間
-        updateBorrowRecord(deviceId, device.borrowClass, device.borrowTime, returnTime);
-        alert('設備歸還成功！');
-        setTimeout(() => {
-            location.reload(); // 歸還成功後重整頁面
-        }, 1000);
     });
 }
 
 function updateDevice(deviceId, data) {
-    const deviceRef = database.ref(`devices/${deviceId}`);
-    deviceRef.update(data);
+    return new Promise((resolve, reject) => {
+        const deviceRef = database.ref(`devices/${deviceId}`);
+        deviceRef.update(data)
+            .then(resolve)
+            .catch(reject);
+    });
 }
 
 function addNote(deviceId) {
@@ -319,12 +327,22 @@ function addBorrowRecord(deviceId, borrower, borrowTime) {
 
 // 更新借閱記錄的歸還時間
 function updateBorrowRecord(deviceId, borrower, borrowTime, returnTime) {
-    const recordsRef = database.ref('borrowRecords');
-    recordsRef.orderByChild('deviceId').equalTo(deviceId).once('value', (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-            const record = childSnapshot.val();
-            if (record.borrower === borrower && record.borrowTime === borrowTime && record.returnTime === '') {
-                childSnapshot.ref.update({ returnTime: returnTime });
+    return new Promise((resolve, reject) => {
+        const recordsRef = database.ref('borrowRecords');
+        recordsRef.orderByChild('deviceId').equalTo(deviceId).once('value', (snapshot) => {
+            const updates = {};
+            snapshot.forEach((childSnapshot) => {
+                const record = childSnapshot.val();
+                if (record.borrower === borrower && record.borrowTime === borrowTime && record.returnTime === '') {
+                    updates[`${childSnapshot.key}/returnTime`] = returnTime;
+                }
+            });
+            if (Object.keys(updates).length > 0) {
+                recordsRef.update(updates)
+                    .then(resolve)
+                    .catch(reject);
+            } else {
+                resolve();
             }
         });
     });
