@@ -58,6 +58,27 @@ document.querySelectorAll('.category-button').forEach(button => {
     });
 });
 
+// 替換原有的夜間模式初始化代碼
+const darkModeToggle = document.getElementById('darkModeToggle');
+let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+// 初始化夜間模式狀態
+if (isDarkMode) {
+    document.body.classList.add('dark-mode');
+}
+
+// 切換夜間模式
+darkModeToggle.addEventListener('click', () => {
+    isDarkMode = !isDarkMode;
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+    // 可選：添加動畫效果
+    darkModeToggle.style.transform = 'scale(1.1)';
+    setTimeout(() => {
+        darkModeToggle.style.transform = 'scale(1)';
+    }, 200);
+});
+
 function toggleScanner() {
     scannerMode = !scannerMode;
     document.getElementById('scannerSection').style.display = scannerMode ? 'block' : 'none';

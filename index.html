@@ -9,7 +9,13 @@
 <body>
     <div id="appSection">
         <header>
-            <h1>裝置借用系統</h1>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>裝置借用系統</h1>
+                <button id="darkModeToggle" class="mode-button" aria-label="切換夜間模式">
+                    <span class="mode-icon light-icon">☀️</span>
+                    <span class="mode-icon dark-icon">🌙</span>
+                </button>
+            </div>
             <div class="header-buttons">
                 <button id="scanButton" class="primary-button">掃描借用</button>
                 <button id="returnButton" class="warning-button" onclick="toggleReturnScanner()">掃描歸還</button>
