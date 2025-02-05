@@ -10,34 +10,44 @@ const firebaseConfig = {
     measurementId: "G-4MMDL3BGB6"
 };
 
+// 全域狀態變數 - 必須在使用前宣告
+let currentUser = null;
+let authInitialized = false;
+let loginInProgress = false;
+let scannerMode = false;
+let currentDeviceId = null;
+let returnScannerMode = false;
+let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+// 常數
+const privilegedUsers = ['teacher', 'yang', 'test']; //管理員
+
 // 初始化 Firebase - 添加錯誤處理
 try {
     firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    
+    provider.setCustomParameters({
+        prompt: 'select_account'
+    });
+    
     console.log('Firebase 初始化成功');
 } catch (error) {
     console.error('Firebase 初始化失敗:', error);
 }
 
-// 確保 firebase.database() 和 firebase.auth() 在 Firebase 初始化後調用
-const database = firebase.database();
-const auth = firebase.auth();
-
-// 設定 Google 登入提供者
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({
-    prompt: 'select_account'
-});
-
 // 認證相關狀態變數
-let currentUser = null;
-let authInitialized = false;
-let loginInProgress = false;  // 添加登入狀態追蹤變數
+// let currentUser = null;
+// let authInitialized = false;
+// let loginInProgress = false;  // 添加登入狀態追蹤變數
 
-// 其他狀態變數
-const privilegedUsers = ['teacher', 'yang', 'test']; //管理員
-let scannerMode = false;
-let currentDeviceId = null;
-let returnScannerMode = false;
+// // 其他狀態變數
+// const privilegedUsers = ['teacher', 'yang', 'test']; //管理員
+// let scannerMode = false;
+// let currentDeviceId = null;
+// let returnScannerMode = false;
 
 // 新增分類常數
 const CATEGORIES = {
@@ -114,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 替換原有的夜間模式初始化代碼
 const darkModeToggle = document.getElementById('darkModeToggle');
-let isDarkMode = localStorage.getItem('darkMode') === 'true';
+// let isDarkMode = localStorage.getItem('darkMode') === 'true';
 
 // 初始化夜間模式狀態
 if (isDarkMode) {
