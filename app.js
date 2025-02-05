@@ -10,7 +10,10 @@ const firebaseConfig = {
     measurementId: "G-4MMDL3BGB6"
 };
 
-// 全域狀態變數 - 必須在使用前宣告
+// 全域變數宣告
+let database;
+let auth;
+let provider;
 let currentUser = null;
 let authInitialized = false;
 let loginInProgress = false;
@@ -25,9 +28,9 @@ const privilegedUsers = ['teacher', 'yang', 'test']; //管理員
 // 初始化 Firebase - 添加錯誤處理
 try {
     firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
-    const auth = firebase.auth();
-    const provider = new firebase.auth.GoogleAuthProvider();
+    database = firebase.database();
+    auth = firebase.auth();
+    provider = new firebase.auth.GoogleAuthProvider();
     
     provider.setCustomParameters({
         prompt: 'select_account'
@@ -62,6 +65,11 @@ let currentCategory = 'all';
 
 // 將所有 DOM 相關的初始化移到 DOMContentLoaded 事件中
 document.addEventListener('DOMContentLoaded', function() {
+    if (!database) {
+        console.error('Firebase Database 未初始化');
+        return;
+    }
+    
     // 事件監聽器設置
     document.getElementById('scanButton').addEventListener('click', toggleScanner);
     document.getElementById('barcodeInput').addEventListener('keypress', handleBarcodeScan);
