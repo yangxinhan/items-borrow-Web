@@ -564,43 +564,65 @@ function updateDevices() {
 }
 
 // 登入相關函數
-function handleLogin() {
-    auth.signInWithPopup(provider)
-        .then((result) => {
-            console.log('登入成功：', result.user.email);
-        })
-        .catch((error) => {
-            console.error('登入失敗：', error);
+async function handleLogin() {
+    if (loginInProgress) {
+        console.log('登入程序進行中，請稍候...');
+        return;
+    }
+
+    try {
+        loginInProgress = true;
+        console.log('開始登入流程');
+        const result = await auth.signInWithPopup(provider);
+        console.log('Google 登入成功', result.user.email);
+        currentUser = result.user;
+        hideLoginButton();
+        showLoggedInButtons();
+        updateCurrentUserDisplay();
+    } catch (error) {
+        console.error('登入過程發生錯誤:', error);
+        // 只有在真正登入失敗時才顯示錯誤
+        if (!currentUser) {
             alert('登入失敗：' + error.message);
-        });
+        }
+    } finally {
+        loginInProgress = false;
+    }
 }
 
 // 修改登出函數
-function handleLogout() {
-    auth.signOut()
-        .then(() => {
-            console.log('登出成功');
-            showLoginButton();
-            window.location.reload(); // 重新載入頁面以重置狀態
-        })
-        .catch((error) => {
-            console.error('登出失敗：', error);
-            alert('登出失敗：' + error.message);
-        });
+async function handleLogout() {
+    try {
+        console.log('開始登出流程');
+        await auth.signOut();
+        console.log('登出成功');
+        currentUser = null;
+        showLoginButton();
+        hideLoggedInButtons();
+        updateCurrentUserDisplay();
+        // 可選：重新載入頁面
+        // window.location.reload();
+    } catch (error) {
+        console.error('登出失敗:', error);
+        alert('登出失敗：' + error.message);
+    }
 }
 
-// 監聽認證狀態變化
+// 修改授權狀態監聽器
 auth.onAuthStateChanged(user => {
-    console.log('Auth state changed:', user); // 添加除錯訊息
+    if (!authInitialized) {
+        authInitialized = true;
+        console.log('首次初始化 Auth 狀態');
+    }
+
+    console.log('Auth 狀態變更:', user?.email || '未登入');
+    
     if (user) {
-        // 使用者已登入
         currentUser = user;
-        console.log('使用者已登入：', user.email);
         hideLoginButton();
         showLoggedInButtons();
         updateCurrentUserDisplay();
     } else {
-        // 使用者未登入
         currentUser = null;
         showLoginButton();
         hideLoggedInButtons();
@@ -608,83 +630,31 @@ auth.onAuthStateChanged(user => {
     }
 });
 
-// 顯示/隱藏按鈕的輔助函數
-function showLoginButton() {
-    document.getElementById('loginButton').style.display = 'inline-flex';
-    document.getElementById('logoutButton').style.display = 'none';
-}
+// 移除重複的事件監聽器註冊
+document.addEventListener('DOMContentLoaded', function() {
+    const loginButton = document.getElementById('loginButton');
+    const logoutButton = document.getElementById('logoutButton');
+    
+    if (loginButton) {
+        loginButton.addEventListener('click', handleLogin);
+    }
+    
+    if (logoutButton) {
+        logoutButton.addEventListener('click', handleLogout);
+    }
 
-function hideLoginButton() {
-    document.getElementById('loginButton').style.display = 'none';
-    document.getElementById('logoutButton').style.display = 'inline-flex';
-}
+    /* ...其他 DOMContentLoaded 的初始化代碼... */
+});
 
-function showLoggedInButtons() {
-    document.getElementById('scanButton').style.display = 'inline-flex';
-    document.getElementById('returnButton').style.display = 'inline-flex';
-    document.getElementById('historyButton').style.display = 'inline-flex';
-}
-
-function hideLoggedInButtons() {
-    document.getElementById('scanButton').style.display = 'none';
-    document.getElementById('returnButton').style.display = 'none';
-    document.getElementById('historyButton').style.display = 'none';
-}
-
-// 更新當前用戶顯示
+// 更新使用者顯示函數
 function updateCurrentUserDisplay() {
     const userDisplayElement = document.getElementById('currentUserDisplay');
+    if (!userDisplayElement) return;
+    
     if (currentUser) {
         userDisplayElement.textContent = `使用者: ${currentUser.email}`;
     } else {
         userDisplayElement.textContent = '';
     }
 }
-
-// 將事件監聽器的註冊移到 DOMContentLoaded 事件中
-document.addEventListener('DOMContentLoaded', function() {
-    // 初始化登入相關按鈕
-    const loginButton = document.getElementById('loginButton');
-    const logoutButton = document.getElementById('logoutButton');
-    
-    if (loginButton) {
-        loginButton.addEventListener('click', function() {
-            console.log('點擊登入按鈕');
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    console.log('登入成功：', result.user.email);
-                    currentUser = result.user;
-                    hideLoginButton();
-                    showLoggedInButtons();
-                    updateCurrentUserDisplay();
-                })
-                .catch((error) => {
-                    console.error('登入失敗：', error);
-                    alert('登入失敗：' + error.message);
-                });
-        });
-    }
-    
-    if (logoutButton) {
-        logoutButton.addEventListener('click', handleLogout);
-    }
-});
-
-// 修改授權狀態監聽器，添加更多日誌
-auth.onAuthStateChanged(user => {
-    console.log('Auth state changed:', user);
-    if (user) {
-        console.log('使用者已登入：', user.email);
-        currentUser = user;
-        hideLoginButton();
-        showLoggedInButtons();
-        updateCurrentUserDisplay();
-    } else {
-        console.log('使用者未登入');
-        currentUser = null;
-        showLoginButton();
-        hideLoggedInButtons();
-        updateCurrentUserDisplay();
-    }
-});
 
