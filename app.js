@@ -28,12 +28,15 @@ provider.setCustomParameters({
     prompt: 'select_account'
 });
 
+// 認證相關狀態變數
 let currentUser = null;
-const privilegedUsers = ['teacher', 'yang', 'test']; //管理員
+let authInitialized = false;
+let loginInProgress = false;  // 添加登入狀態追蹤變數
 
+// 其他狀態變數
+const privilegedUsers = ['teacher', 'yang', 'test']; //管理員
 let scannerMode = false;
 let currentDeviceId = null;
-
 let returnScannerMode = false;
 
 // 新增分類常數
