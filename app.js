@@ -10,8 +10,15 @@ const firebaseConfig = {
     measurementId: "G-4MMDL3BGB6"
 };
 
-// 初始化 Firebase 和 Auth
-firebase.initializeApp(firebaseConfig);
+// 初始化 Firebase - 添加錯誤處理
+try {
+    firebase.initializeApp(firebaseConfig);
+    console.log('Firebase 初始化成功');
+} catch (error) {
+    console.error('Firebase 初始化失敗:', error);
+}
+
+// 確保 firebase.database() 和 firebase.auth() 在 Firebase 初始化後調用
 const database = firebase.database();
 const auth = firebase.auth();
 
@@ -29,21 +36,6 @@ let currentDeviceId = null;
 
 let returnScannerMode = false;
 
-document.getElementById('scanButton').addEventListener('click', toggleScanner);
-document.getElementById('barcodeInput').addEventListener('keypress', handleBarcodeScan);
-document.getElementById('studentInput').addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        const studentId = event.target.value;
-        processStudentId(studentId);
-        event.target.value = '';
-    }
-});
-// 移除手動輸入按鈕的監聽器
-// document.getElementById('manualInputBtn').addEventListener('click', function() {...});
-
-// 新增歸還掃描器相關事件監聽
-document.getElementById('returnBarcodeInput').addEventListener('keypress', handleReturnBarcodeScan);
-
 // 新增分類常數
 const CATEGORIES = {
     PHONE: { id: 'phone', name: '手機設備', pattern: /^SAM\d{3}$/ },
@@ -55,14 +47,66 @@ const CATEGORIES = {
 
 let currentCategory = 'all';
 
-// 添加分類按鈕事件監聽
-document.querySelectorAll('.category-button').forEach(button => {
-    button.addEventListener('click', () => {
-        document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        currentCategory = button.dataset.category;
-        updateDevices();
+// 將所有 DOM 相關的初始化移到 DOMContentLoaded 事件中
+document.addEventListener('DOMContentLoaded', function() {
+    // 事件監聽器設置
+    document.getElementById('scanButton').addEventListener('click', toggleScanner);
+    document.getElementById('barcodeInput').addEventListener('keypress', handleBarcodeScan);
+    document.getElementById('returnBarcodeInput').addEventListener('keypress', handleReturnBarcodeScan);
+    
+    // 分類按鈕監聽器
+    document.querySelectorAll('.category-button').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            currentCategory = button.dataset.category;
+            updateDevices();
+        });
     });
+
+    // 登入相關按鈕
+    const loginButton = document.getElementById('loginButton');
+    const logoutButton = document.getElementById('logoutButton');
+    
+    if (loginButton) {
+        loginButton.addEventListener('click', handleLogin);
+    }
+    
+    if (logoutButton) {
+        logoutButton.addEventListener('click', handleLogout);
+    }
+
+    // 關閉按鈕和點擊外部關閉功能
+    document.querySelector('.close-button').addEventListener('click', () => {
+        document.getElementById('itemDetailModal').style.display = 'none';
+    });
+
+    // 模態框外部點擊關閉
+    window.addEventListener('click', (event) => {
+        const modal = document.getElementById('itemDetailModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // 初始化夜間模式
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+    }
+    
+    darkModeToggle.addEventListener('click', () => {
+        isDarkMode = !isDarkMode;
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode);
+        darkModeToggle.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            darkModeToggle.style.transform = 'scale(1)';
+        }, 200);
+    });
+
+    // 初始顯示主頁面
+    showApp();
 });
 
 // 替換原有的夜間模式初始化代碼
@@ -393,16 +437,6 @@ function closeScanners() {
     returnScannerMode = false;
 }
 
-// 添加分類按鈕事件監聽
-document.querySelectorAll('.category-button').forEach(button => {
-    button.addEventListener('click', () => {
-        document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        currentCategory = button.dataset.category;
-        updateDevices();
-    });
-});
-
 // 新增顯示物品詳情的相關函數
 function showItemDetails(deviceId) {
     const modal = document.getElementById('itemDetailModal');
@@ -529,18 +563,6 @@ function updateDevices() {
     });
 }
 
-// 關閉按鈕和點擊外部關閉功能
-document.querySelector('.close-button').addEventListener('click', () => {
-    document.getElementById('itemDetailModal').style.display = 'none';
-});
-
-window.addEventListener('click', (event) => {
-    const modal = document.getElementById('itemDetailModal');
-    if (event.target === modal) {
-        modal.style.display = 'none';
-    }
-});
-
 // 登入相關函數
 function handleLogin() {
     auth.signInWithPopup(provider)
@@ -618,10 +640,6 @@ function updateCurrentUserDisplay() {
         userDisplayElement.textContent = '';
     }
 }
-
-// 添加事件監聽器
-document.getElementById('loginButton').addEventListener('click', handleLogin);
-document.getElementById('logoutButton').addEventListener('click', handleLogout);
 
 // 將事件監聽器的註冊移到 DOMContentLoaded 事件中
 document.addEventListener('DOMContentLoaded', function() {
