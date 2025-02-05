@@ -99,9 +99,7 @@ function toggleScanner() {
 function resetScannerState() {
     currentDeviceId = null;
     document.getElementById('deviceScanStep').style.display = 'block';
-    document.getElementById('studentScanStep').style.display = 'none';
     document.getElementById('barcodeInput').value = '';
-    document.getElementById('studentInput').value = '';
     document.getElementById('barcodeInput').focus();
 }
 
@@ -116,6 +114,12 @@ function handleBarcodeScan(event) {
 }
 
 function processDeviceBarcode(barcode) {
+    // 確認用戶已登入
+    if (!currentUser) {
+        alert('請先登入');
+        return;
+    }
+
     const deviceRef = database.ref('devices');
     deviceRef.orderByChild('borrowId').equalTo(barcode).once('value', (snapshot) => {
         if (snapshot.exists()) {
@@ -125,12 +129,13 @@ function processDeviceBarcode(barcode) {
             if (device.borrowed) {
                 returnDevice(deviceId);
                 resetScannerState();
-                closeScanners(); // 使用新函數關閉所有掃描區域
+                closeScanners();
             } else {
-                currentDeviceId = deviceId;
-                document.getElementById('deviceScanStep').style.display = 'none';
-                document.getElementById('studentScanStep').style.display = 'block';
-                document.getElementById('studentInput').focus();
+                // 直接使用 Google 帳號資訊進行借用
+                borrowDevice(deviceId, currentUser.email);
+                resetScannerState();
+                closeScanners();
+                updateDevices();
             }
         } else {
             alert('找不到此條碼對應的設備');
@@ -139,25 +144,7 @@ function processDeviceBarcode(barcode) {
     });
 }
 
-function processStudentId(studentId) {
-    if (!currentDeviceId) {
-        alert('請先掃描裝置條碼');
-        return;
-    }
-
-    // 驗證學號格式
-    if (studentId.length < 5) {
-        alert('請輸入有效的學號');
-        return;
-    }
-
-    // 直接使用學號作為借用者資訊
-    borrowDevice(currentDeviceId, studentId);
-    resetScannerState();
-    closeScanners(); // 使用新函數關閉所有掃描區域
-    // 立即更新畫面
-    updateDevices();
-}
+// 移除 processStudentId 函數，因為不再需要
 
 function showApp() {
     document.getElementById('appSection').style.display = 'block';
