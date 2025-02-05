@@ -21,24 +21,36 @@ let scannerMode = false;
 let currentDeviceId = null;
 let returnScannerMode = false;
 let isDarkMode = localStorage.getItem('darkMode') === 'true';
+let databaseInitialized = false;
 
 // 常數
 const privilegedUsers = ['teacher', 'yang', 'test']; //管理員
 
-// 初始化 Firebase - 添加錯誤處理
-try {
-    firebase.initializeApp(firebaseConfig);
-    database = firebase.database();
-    auth = firebase.auth();
-    provider = new firebase.auth.GoogleAuthProvider();
-    
-    provider.setCustomParameters({
-        prompt: 'select_account'
-    });
-    
-    console.log('Firebase 初始化成功');
-} catch (error) {
-    console.error('Firebase 初始化失敗:', error);
+// Firebase 初始化函數
+async function initializeFirebase() {
+    try {
+        const app = firebase.initializeApp(firebaseConfig);
+        database = firebase.database();
+        auth = firebase.auth();
+        provider = new firebase.auth.GoogleAuthProvider();
+        
+        provider.setCustomParameters({
+            prompt: 'select_account'
+        });
+
+        // 等待初始連接
+        await database.ref('.info/connected').once('value');
+        databaseInitialized = true;
+        console.log('Firebase 初始化成功');
+        
+        // 初始載入數據
+        await updateDevices();
+        
+        return true;
+    } catch (error) {
+        console.error('Firebase 初始化失敗:', error);
+        return false;
+    }
 }
 
 // 認證相關狀態變數
@@ -64,9 +76,11 @@ const CATEGORIES = {
 let currentCategory = 'all';
 
 // 將所有 DOM 相關的初始化移到 DOMContentLoaded 事件中
-document.addEventListener('DOMContentLoaded', function() {
-    if (!database) {
-        console.error('Firebase Database 未初始化');
+document.addEventListener('DOMContentLoaded', async function() {
+    // 先初始化 Firebase
+    const initialized = await initializeFirebase();
+    if (!initialized) {
+        alert('系統初始化失敗，請重新整理頁面');
         return;
     }
     
@@ -311,38 +325,56 @@ function updateCurrentUserDisplay() {
 showApp();
 
 // 修改 updateDevices 函數以支援分類
-function updateDevices() {
-    const devicesRef = database.ref('devices');
-    devicesRef.once('value', (snapshot) => {
-        const devices = snapshot.val();
-        const table = document.getElementById('deviceTable');
-        
-        while (table.rows.length > 1) {
-            table.deleteRow(1);
-        }
-        
-        const sortedDevices = Object.entries(devices)
-            .map(([id, device]) => ({id, ...device}))
-            .filter(device => {
-                if (currentCategory === 'all') return true;
-                return getCategoryById(device.borrowId) === currentCategory;
-            })
-            .sort((a, b) => a.borrowId.localeCompare(b.borrowId));
+async function updateDevices() {
+    if (!databaseInitialized) {
+        console.log('等待 Firebase 初始化...');
+        return;
+    }
 
-        sortedDevices.forEach(device => {
-            const row = table.insertRow();
-            row.style.cursor = 'pointer';
-            row.addEventListener('click', () => showItemDetails(device.id));
-            row.insertCell(0).textContent = `${device.borrowId} - ${device.name}`;
-            
-            const statusCell = row.insertCell(1);
-            statusCell.textContent = device.borrowed ? '已借出' : '可借用';
-            statusCell.className = device.borrowed ? 'status-borrowed' : 'status-available';
-            
-            row.insertCell(2).textContent = device.borrowClass || '';
-            row.insertCell(3).textContent = device.borrowTime || '';
-            row.insertCell(4).textContent = device.note || '';
-        });
+    try {
+        const snapshot = await database.ref('devices').once('value');
+        const devices = snapshot.val();
+        if (!devices) {
+            console.log('無設備數據');
+            return;
+        }
+
+        updateDevicesTable(devices);
+    } catch (error) {
+        console.error('讀取設備數據失敗:', error);
+    }
+}
+
+// 分離表格更新邏輯
+function updateDevicesTable(devices) {
+    const table = document.getElementById('deviceTable');
+    if (!table) return;
+    
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+    
+    const sortedDevices = Object.entries(devices)
+        .map(([id, device]) => ({id, ...device}))
+        .filter(device => {
+            if (currentCategory === 'all') return true;
+            return getCategoryById(device.borrowId) === currentCategory;
+        })
+        .sort((a, b) => a.borrowId.localeCompare(b.borrowId));
+
+    sortedDevices.forEach(device => {
+        const row = table.insertRow();
+        row.style.cursor = 'pointer';
+        row.addEventListener('click', () => showItemDetails(device.id));
+        row.insertCell(0).textContent = `${device.borrowId} - ${device.name}`;
+        
+        const statusCell = row.insertCell(1);
+        statusCell.textContent = device.borrowed ? '已借出' : '可借用';
+        statusCell.className = device.borrowed ? 'status-borrowed' : 'status-available';
+        
+        row.insertCell(2).textContent = device.borrowClass || '';
+        row.insertCell(3).textContent = device.borrowTime || '';
+        row.insertCell(4).textContent = device.note || '';
     });
 }
 
@@ -549,39 +581,24 @@ function addNoImagePlaceholder(container) {
 }
 
 // 修改 updateDevices 函數中的表格生成部分
-function updateDevices() {
-    const devicesRef = database.ref('devices');
-    devicesRef.once('value', (snapshot) => {
-        const devices = snapshot.val();
-        const table = document.getElementById('deviceTable');
-        
-        while (table.rows.length > 1) {
-            table.deleteRow(1);
-        }
-        
-        const sortedDevices = Object.entries(devices)
-            .map(([id, device]) => ({id, ...device}))
-            .filter(device => {
-                if (currentCategory === 'all') return true;
-                return getCategoryById(device.borrowId) === currentCategory;
-            })
-            .sort((a, b) => a.borrowId.localeCompare(b.borrowId));
+async function updateDevices() {
+    if (!databaseInitialized) {
+        console.log('等待 Firebase 初始化...');
+        return;
+    }
 
-        sortedDevices.forEach(device => {
-            const row = table.insertRow();
-            row.style.cursor = 'pointer';
-            row.addEventListener('click', () => showItemDetails(device.id));
-            row.insertCell(0).textContent = `${device.borrowId} - ${device.name}`;
-            
-            const statusCell = row.insertCell(1);
-            statusCell.textContent = device.borrowed ? '已借出' : '可借用';
-            statusCell.className = device.borrowed ? 'status-borrowed' : 'status-available';
-            
-            row.insertCell(2).textContent = device.borrowClass || '';
-            row.insertCell(3).textContent = device.borrowTime || '';
-            row.insertCell(4).textContent = device.note || '';
-        });
-    });
+    try {
+        const snapshot = await database.ref('devices').once('value');
+        const devices = snapshot.val();
+        if (!devices) {
+            console.log('無設備數據');
+            return;
+        }
+
+        updateDevicesTable(devices);
+    } catch (error) {
+        console.error('讀取設備數據失敗:', error);
+    }
 }
 
 // 登入相關函數
@@ -630,7 +647,7 @@ async function handleLogout() {
 }
 
 // 修改授權狀態監聽器
-auth.onAuthStateChanged(user => {
+auth.onAuthStateChanged(async user => {
     if (!authInitialized) {
         authInitialized = true;
         console.log('首次初始化 Auth 狀態');
@@ -643,6 +660,7 @@ auth.onAuthStateChanged(user => {
         hideLoginButton();
         showLoggedInButtons();
         updateCurrentUserDisplay();
+        await updateDevices(); // 重新載入數據
     } else {
         currentUser = null;
         showLoginButton();
