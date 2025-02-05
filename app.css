@@ -427,6 +427,168 @@ button:disabled {
     border-color: #007bff;
 }
 
+/* 模態框樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* 從 15% 改為 5% */
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 700px;
+    position: relative;
+    animation: modalSlideIn 0.3s ease;
+    max-height: 80vh; /* 設定最大高度為視窗高度的 80% */
+    overflow-y: auto; /* 允許垂直滾動 */
+}
+
+.modal-body {
+    overflow-y: auto; /* 確保內容可滾動 */
+    max-height: calc(80vh - 100px); /* 減去標題和padding的空間 */
+    padding-right: 10px; /* 為滾動條預留空間 */
+}
+
+/* 自訂滾動條樣式 */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 深色模式滾動條樣式 */
+body.dark-mode .modal-content::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+body.dark-mode .modal-content::-webkit-scrollbar-thumb {
+    background: #666;
+}
+
+body.dark-mode .modal-content::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+.close-button {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+close-button:hover {
+    color: #666;
+}
+
+.modal-header {
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    text-align: center; /* 新增：標題置中 */
+    margin: 0 40px; /* 新增：左右留空間給關閉按鈕 */
+}
+
+.item-image {
+    text-align: center;
+    margin-bottom: 20px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+.no-image-placeholder {
+    padding: 40px;
+    background-color: #f0f0f0;
+    color: #666;
+    border-radius: 4px;
+    font-size: 1.2em;
+    width: 100%;
+    text-align: center;
+}
+
+body.dark-mode .no-image-placeholder {
+    background-color: #404040;
+    color: #999;
+}
+
+.item-image img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+.item-details {
+    line-height: 1.4;
+    padding: 20px;
+}
+
+.item-details p {
+    margin: 10px 0;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.item-details strong {
+    color: #007bff;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.item-details span {
+    display: block;
+    word-wrap: break-word;
+}
+
+body.dark-mode .item-details p {
+    background-color: #404040;
+}
+
+body.dark-mode .item-details strong {
+    color: #5aa6ff;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 /* 響應式設計 */
 @media (max-width: 768px) {
     .table-container {
@@ -530,6 +692,25 @@ button:disabled {
     header {
         padding: 10px;
     }
+
+    .modal-content {
+        margin: 2% auto; /* 手機版更靠上 */
+        width: 90%;
+        padding: 15px;
+    }
+    
+    .item-image img {
+        max-height: 200px;
+    }
+
+    .item-details p {
+        padding: 12px;
+        margin: 10px 0;
+    }
+    
+    .item-details strong {
+        font-size: 1em;
+    }
 }
 
 @media (max-width: 320px) {
@@ -562,4 +743,45 @@ button:disabled {
         width: auto;
         flex: 1;
     }
+}
+
+/* 修改彈出視窗的夜間模式樣式 */
+body.dark-mode .modal-content {
+    background-color: #2d2d2d;
+    color: #ffffff;
+    border: 1px solid #404040;
+}
+
+body.dark-mode .close-button {
+    color: #ffffff;
+}
+
+body.dark-mode .close-button:hover {
+    color: #aaaaaa;
+}
+
+body.dark-mode .item-image {
+    background-color: #404040;
+    border: 1px solid #505050;
+}
+
+body.dark-mode .item-details p {
+    background-color: #404040;
+    border: 1px solid #505050;
+}
+
+body.dark-mode .modal {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .modal-header h2 {
+    color: #ffffff;
+}
+
+body.dark-mode #modalItemStatus.status-available {
+    color: #4caf50;
+}
+
+body.dark-mode #modalItemStatus.status-borrowed {
+    color: #f44336;
 }

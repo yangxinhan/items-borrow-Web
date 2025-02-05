@@ -3,427 +3,640 @@
         "device01": {
             "name": "samsung手機Sam01(含充電線組)",
             "borrowed": false,
-            "note": "手機密碼dwhssam01",
-            "borrowId": "SAM001"
+            "note": "",
+            "borrowId": "SAM001",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device02": {
             "name": "samsung手機Sam02(含充電線組)",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM002"
+            "borrowId": "SAM002",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device03": {
             "name": "samsung手機Sam03(含充電線組)",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM003"
+            "borrowId": "SAM003",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device04": {
             "name": "samsung手機Sam04(含充電線組)",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM004"
+            "borrowId": "SAM004",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device05": {
             "name": "samsung手機Sam05(含充電線組)",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM005"
+            "borrowId": "SAM005",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device06": {
             "name": "samsung手機Sam06(含充電線組)",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM006"
+            "borrowId": "SAM006",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device07": {
             "name": "samsung手機Sam07(含充電線組)",
             "borrowed": false,
-            "note": "sam07盒子裡面裝的是手機sam17",
-            "borrowId": "SAM007"
+            "note": "",
+            "borrowId": "SAM007",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device08": {
             "name": "samsung手機Sam08",
             "borrowed": false,
-            "note": "朝陽老師借用(20231015確認)",
-            "borrowId": "SAM008"
+            "note": "",
+            "borrowId": "SAM008",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device09": {
             "name": "samsung手機Sam09(含充電線組)",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM009"
+            "borrowId": "SAM009",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device10": {
             "name": "samsung手機Sam10(含充電線組)",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM010"
+            "borrowId": "SAM010",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device11": {
             "name": "samsung手機Sam11(含充電線組)",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM011"
+            "borrowId": "SAM011",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device12": {
             "name": "samsung手機Sam12",
             "borrowed": false,
-            "note": "令勤老師借用(20231015確認)",
-            "borrowId": "SAM012"
+            "note": "",
+            "borrowId": "SAM012",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device13": {
             "name": "samsung手機Sam13(含充電線組)",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM013"
+            "borrowId": "SAM013",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device14": {
             "name": "samsung手機Sam14(含充電線組)",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM014"
+            "borrowId": "SAM014",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device15": {
             "name": "samsung手機Sam15",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM015"
+            "borrowId": "SAM015",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device16": {
             "name": "samsung手機Sam16",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM016"
+            "borrowId": "SAM016",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device17": {
             "name": "samsung手機Sam17",
             "borrowed": false,
-            "note": "失蹤。最後一次紀錄為50401丁竣修借走，無歸還紀錄，202310月詢問十，該生回答已歸還。",
-            "borrowId": "SAM017"
+            "note": "",
+            "borrowId": "SAM017",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device18": {
             "name": "samsung手機Sam18",
             "borrowed": false,
             "note": "",
-            "borrowId": "SAM018"
+            "borrowId": "SAM018",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device19": {
             "name": "samsung手機Sam19",
             "borrowed": false,
-            "note": "失蹤。無紀錄。",
-            "borrowId": "SAM019"
+            "note": "",
+            "borrowId": "SAM019",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device20": {
             "name": "samsung手機Sam20",
             "borrowed": false,
-            "note": "文聰老師借用(20231015確認)",
-            "borrowId": "SAM020"
+            "note": "",
+            "borrowId": "SAM020",
+            "specs": "型號：Samsung Galaxy A51\n螢幕：6.5吋 Super AMOLED\n處理器：Exynos 9611\n記憶體：6GB RAM\n儲存空間：128GB\n主相機：4800萬畫素(廣角) + 1200萬畫素(超廣角) + 500萬畫素(微距) + 500萬畫素(景深)\n前置相機：3200萬畫素\n電池：4000mAh\n作業系統：Android 10",
+            "instructions": "1. 設備僅供教學使用，請妥善保管\n2. 使用前請確認電量充足\n3. 請勿安裝未經授權的應用程式\n4. 使用完畢請清除所有個人資料\n5. 如有故障請立即通知管理員\n6. 歸還時請一併繳回充電線材",
+            "imageUrl": ""
         },
         "device21": {
             "name": "ulanzi迷你三腳架12個(可接相機等)",
             "borrowed": false,
-            "note": "貼藍色圓形標籤1~11，另有3個放在360度攝影機盒中",
-            "borrowId": "ULANZI001"
+            "note": "",
+            "borrowId": "ULANZI001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device22": {
             "name": "ANKER 10連接埠充電器",
             "borrowed": false,
             "note": "",
-            "borrowId": "ANKER001"
+            "borrowId": "ANKER001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device23": {
             "name": "Insta360度環景攝影機1",
             "borrowed": false,
-            "note": "充電線不見了、附備用電池一顆、小腳架",
-            "borrowId": "INSTA001"
+            "note": "",
+            "borrowId": "INSTA001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device24": {
             "name": "Insta360度環景攝影機2",
             "borrowed": false,
-            "note": "充電線不見了、附備用電池一顆、小腳架",
-            "borrowId": "INSTA002"
+            "note": "",
+            "borrowId": "INSTA002",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device25": {
             "name": "Insta360度環景攝影機3",
             "borrowed": false,
-            "note": "附充電線、小腳架",
-            "borrowId": "INSTA003"
+            "note": "",
+            "borrowId": "INSTA003",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device26": {
             "name": "Insta360自拍桿3支",
             "borrowed": false,
-            "note": "一支只剩盒子",
-            "borrowId": "INSTA004"
+            "note": "",
+            "borrowId": "INSTA004",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device27": {
             "name": "三軸穩定器GIN1",
             "borrowed": false,
-            "note": "大灣學外拍用",
-            "borrowId": "GIN001"
+            "note": "",
+            "borrowId": "GIN001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device28": {
             "name": "三軸穩定器GIN2",
             "borrowed": false,
             "note": "",
-            "borrowId": "GIN002"
+            "borrowId": "GIN002",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device29": {
             "name": "三軸穩定器GIN3",
             "borrowed": false,
             "note": "",
-            "borrowId": "GIN003"
+            "borrowId": "GIN003",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device30": {
             "name": "三軸穩定器GIN4",
             "borrowed": false,
             "note": "",
-            "borrowId": "GIN004"
+            "borrowId": "GIN004",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device31": {
             "name": "三軸穩定器GIN5",
             "borrowed": false,
             "note": "",
-            "borrowId": "GIN005"
+            "borrowId": "GIN005",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device32": {
             "name": "三軸穩定器GIN6",
             "borrowed": false,
             "note": "",
-            "borrowId": "GIN006"
+            "borrowId": "GIN006",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device33": {
             "name": "三軸穩定器GIN7",
             "borrowed": false,
             "note": "",
-            "borrowId": "GIN007"
+            "borrowId": "GIN007",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device34": {
             "name": "三軸穩定器GIN8",
             "borrowed": false,
             "note": "",
-            "borrowId": "GIN008"
+            "borrowId": "GIN008",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device35": {
             "name": "三軸穩定器GIN9",
             "borrowed": false,
             "note": "",
-            "borrowId": "GIN009"
+            "borrowId": "GIN009",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device36": {
             "name": "三軸穩定器GIN10",
             "borrowed": false,
-            "borrowId": "GIN010"
+            "borrowId": "GIN010",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device37": {
             "name": "各種線材、轉接頭",
             "borrowed": false,
-            "note": "HDMI線、各種電源線、音源線、micro-USB線、miniUSB線、typeC-VGA線",
-            "borrowId": "CABLE001"
+            "note": "",
+            "borrowId": "CABLE001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device38": {
             "name": "國文科簡報筆3支",
             "borrowed": false,
-            "note": "一隻灰色兩隻黑色，使用後放回來請記得拔電池",
-            "borrowId": "PEN001"
+            "note": "",
+            "borrowId": "PEN001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device39": {
             "name": "nitecore充電電池充電座3台",
             "borrowed": false,
-            "note": "可用規格:AA、AAA、AAAA、C可用材質:鋰電池、鎳氫、鎳鎘",
-            "borrowId": "NITECORE001"
+            "note": "",
+            "borrowId": "NITECORE001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device40": {
             "name": "雜物盒",
             "borrowed": false,
-            "note": "不知名遙控器、手機附贈耳機、miniSD卡一張",
-            "borrowId": "MISC001"
+            "note": "",
+            "borrowId": "MISC001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device41": {
             "name": "AKG K99監聽耳機",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點在圖書館3F",
-            "borrowId": "AKG001"
+            "note": "",
+            "borrowId": "AKG001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device42": {
             "name": "AKG K99監聽耳機",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點在圖書館3F",
-            "borrowId": "AKG002"
+            "note": "",
+            "borrowId": "AKG002",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device43": {
             "name": "logi攝影機4台(電腦視訊用)",
             "borrowed": false,
-            "note": "1台較舊(球型)3台較新(HD1080p)",
-            "borrowId": "LOGI001"
+            "note": "",
+            "borrowId": "LOGI001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device44": {
             "name": "JVC攝影機",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點在教務處",
-            "borrowId": "JVC001"
+            "note": "",
+            "borrowId": "JVC001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device45": {
             "name": "JVC攝影機",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點在教務處",
-            "borrowId": "JVC002"
+            "note": "",
+            "borrowId": "JVC002",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device46": {
             "name": "JVC攝影機",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點在教務處",
-            "borrowId": "JVC003"
+            "note": "",
+            "borrowId": "JVC003",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device47": {
             "name": "JVC攝影機",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點在教務處",
-            "borrowId": "JVC004"
+            "note": "",
+            "borrowId": "JVC004",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device48": {
             "name": "JVC攝影機",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點在教務處",
-            "borrowId": "JVC005"
+            "note": "",
+            "borrowId": "JVC005",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device49": {
             "name": "JVC攝影機",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點在教務處",
-            "borrowId": "JVC006"
+            "note": "",
+            "borrowId": "JVC006",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device50": {
             "name": "SONY數位攝影機HXR-NX30N",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點寫鄭博仁",
-            "borrowId": "SONY001"
+            "note": "",
+            "borrowId": "SONY001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device51": {
             "name": "OBSBOT雲台攝影機(追焦)",
             "borrowed": false,
-            "note": "直播教學可用",
-            "borrowId": "OBSBOT001"
+            "note": "",
+            "borrowId": "OBSBOT001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device52": {
             "name": "SONY數位相機ZV-E10",
             "borrowed": false,
             "note": "",
-            "borrowId": "SONY002"
+            "borrowId": "SONY002",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device53": {
             "name": "TELLO空拍機TEL01",
             "borrowed": false,
             "note": "",
-            "borrowId": "TELLO001"
+            "borrowId": "TELLO001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device54": {
             "name": "TELLO空拍機TEL02",
             "borrowed": false,
             "note": "",
-            "borrowId": "TELLO002"
+            "borrowId": "TELLO002",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device55": {
             "name": "TELLO空拍機TEL03",
             "borrowed": false,
             "note": "",
-            "borrowId": "TELLO003"
+            "borrowId": "TELLO003",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device56": {
             "name": "TELLO空拍機TEL04",
             "borrowed": false,
             "note": "",
-            "borrowId": "TELLO004"
+            "borrowId": "TELLO004",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device57": {
             "name": "TELLO空拍機TEL05",
             "borrowed": false,
             "note": "",
-            "borrowId": "TELLO005"
+            "borrowId": "TELLO005",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device58": {
             "name": "雜物籃",
             "borrowed": false,
-            "note": "空拍機電池、JVC攝影機電池、dji電池與充電線、攝影機雲台支架(小)、空拍機扇葉、空拍機漿葉保護罩",
-            "borrowId": "MISC002"
+            "note": "",
+            "borrowId": "MISC002",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device59": {
             "name": "ATEM Mini Pro ISO現場製作切換台",
             "borrowed": false,
-            "note": "沒看到財產標籤，只貼了｢109高優購置",
-            "borrowId": "ATEM001"
+            "note": "",
+            "borrowId": "ATEM001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device60": {
-            "name": "DEITY攝影機用麥克風",
+            "name": "",
             "borrowed": false,
             "note": "",
-            "borrowId": "DEITY001"
+            "borrowId": "DEITY001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device61": {
             "name": "SONY電腦迷你麥克風",
             "borrowed": false,
             "note": "",
-            "borrowId": "SONY003"
+            "borrowId": "SONY003",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device62": {
             "name": "SHURE指向型麥克風SM58S",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點在圖書館3F",
-            "borrowId": "SHURE001"
+            "note": "",
+            "borrowId": "SHURE001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device63": {
             "name": "SHURE指向型麥克風SM58S",
             "borrowed": false,
-            "note": "財產標籤貼紙上地點在圖書館3F",
-            "borrowId": "SHURE002"
+            "note": "",
+            "borrowId": "SHURE002",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device64": {
             "name": "saramonic1對1手持麥克風",
             "borrowed": false,
-            "note": "國文科高優購買(接收器在盒子哩，另有一支無線麥克風)",
-            "borrowId": "SARAMONIC001"
+            "note": "",
+            "borrowId": "SARAMONIC001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device65": {
             "name": "BOYA1對2麥克風",
             "borrowed": false,
-            "note": "國文科高優購買",
-            "borrowId": "BOYA001"
+            "note": "",
+            "borrowId": "BOYA001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device66": {
             "name": "RODE領夾式麥克風(可接手機)5盒",
             "borrowed": false,
             "note": "",
-            "borrowId": "RODE001"
+            "borrowId": "RODE001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device67": {
             "name": "Alctron麥克風UM900",
             "borrowed": false,
-            "note": "婷如採購",
-            "borrowId": "ALCTRON001"
+            "note": "",
+            "borrowId": "ALCTRON001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device68": {
             "name": "POP SHIELD 雙層錄音防噴罩",
             "borrowed": false,
-            "note": "婷如採購",
-            "borrowId": "POP001"
+            "note": "",
+            "borrowId": "POP001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device69": {
             "name": "國文科搶答玲(10個按鈴)",
             "borrowed": false,
             "note": "",
-            "borrowId": "BELL001"
+            "borrowId": "BELL001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device70": {
             "name": "國文科搶答玲(10個按鈴)",
             "borrowed": false,
             "note": "",
-            "borrowId": "BELL002"
+            "borrowId": "BELL002",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         },
         "device71": {
             "name": "Aver追焦攝影鏡(電腦視訊用)",
             "borrowed": false,
             "note": "",
-            "borrowId": "AVER001"
+            "borrowId": "AVER001",
+            "specs": "",
+            "instructions": "",
+            "imageUrl": ""
         }
     }
 }

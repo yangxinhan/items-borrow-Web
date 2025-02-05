@@ -272,6 +272,8 @@ function updateDevices() {
 
         sortedDevices.forEach(device => {
             const row = table.insertRow();
+            row.style.cursor = 'pointer';
+            row.addEventListener('click', () => showItemDetails(device.id));
             row.insertCell(0).textContent = `${device.borrowId} - ${device.name}`;
             
             const statusCell = row.insertCell(1);
@@ -405,5 +407,143 @@ document.querySelectorAll('.category-button').forEach(button => {
         currentCategory = button.dataset.category;
         updateDevices();
     });
+});
+
+// 新增顯示物品詳情的相關函數
+function showItemDetails(deviceId) {
+    const modal = document.getElementById('itemDetailModal');
+    const deviceRef = database.ref(`devices/${deviceId}`);
+    
+    // 移除之前的 "無圖片" 提示
+    const existingPlaceholder = document.querySelector('.no-image-placeholder');
+    if (existingPlaceholder) {
+        existingPlaceholder.remove();
+    }
+    
+    deviceRef.once('value', (snapshot) => {
+        const device = snapshot.val();
+        if (device) {
+            // 更新基本資訊
+            document.getElementById('modalItemName').textContent = `${device.name}`;
+            document.getElementById('modalItemId').textContent = device.borrowId;
+            document.getElementById('modalItemSpecs').textContent = device.specs || '暫無規格說明';
+            document.getElementById('modalItemInstructions').textContent = device.instructions || '暫無使用說明';
+            document.getElementById('modalItemStatus').textContent = device.borrowed ? '已借出' : '可借用';
+            document.getElementById('modalItemStatus').className = device.borrowed ? 'status-borrowed' : 'status-available';
+            
+            // 處理圖片顯示
+            const imageElement = document.getElementById('modalItemImage');
+            const imageParent = imageElement.parentElement;
+            
+            // 清除舊的錯誤提示
+            const existingNoImage = imageParent.querySelector('.no-image-placeholder');
+            if (existingNoImage) {
+                existingNoImage.remove();
+            }
+
+            // 解析設備ID來獲取類型和編號
+            const match = device.borrowId.match(/([A-Za-z]+)(\d+)/);
+            if (match) {
+                const [, deviceType, deviceNumber] = match;
+                const type = deviceType.toLowerCase();
+                const paddedNumber = deviceNumber.padStart(3, '0');
+                
+                // 嘗試不同的圖片路徑
+                const paths = [
+                    `./images/${type}/${paddedNumber}.jpg`,
+                    `./images/${type}/${paddedNumber}.png`,
+                    `./images/${type}/${type}${paddedNumber}.jpg`,
+                    `./images/${type}/${type}${paddedNumber}.png`,
+                    `./images/${type}/default.jpg`,
+                    `./images/${type}/default.png`
+                ];
+
+                // 遞迴嘗試載入圖片
+                function tryLoadImage(index) {
+                    if (index >= paths.length) {
+                        // 所有路徑都嘗試過了，顯示無圖片提示
+                        console.log('找不到圖片：', device.borrowId);
+                        imageElement.style.display = 'none';
+                        addNoImagePlaceholder(imageParent);
+                        return;
+                    }
+
+                    imageElement.src = paths[index];
+                    imageElement.style.display = 'block';
+                    
+                    imageElement.onerror = () => {
+                        // 當前路徑失敗，嘗試下一個
+                        tryLoadImage(index + 1);
+                    };
+                }
+
+                // 開始嘗試第一個路徑
+                tryLoadImage(0);
+            } else {
+                // 如果設備ID格式不符合預期
+                console.log('無效的設備ID格式：', device.borrowId);
+                imageElement.style.display = 'none';
+                addNoImagePlaceholder(imageParent);
+            }
+            
+            modal.style.display = 'block';
+        }
+    });
+}
+
+// 新增一個輔助函數來處理無圖片的情況
+function addNoImagePlaceholder(container) {
+    const noImageDiv = document.createElement('div');
+    noImageDiv.className = 'no-image-placeholder';
+    noImageDiv.textContent = '暫無圖片';
+    container.appendChild(noImageDiv);
+}
+
+// 修改 updateDevices 函數中的表格生成部分
+function updateDevices() {
+    const devicesRef = database.ref('devices');
+    devicesRef.once('value', (snapshot) => {
+        const devices = snapshot.val();
+        const table = document.getElementById('deviceTable');
+        
+        while (table.rows.length > 1) {
+            table.deleteRow(1);
+        }
+        
+        const sortedDevices = Object.entries(devices)
+            .map(([id, device]) => ({id, ...device}))
+            .filter(device => {
+                if (currentCategory === 'all') return true;
+                return getCategoryById(device.borrowId) === currentCategory;
+            })
+            .sort((a, b) => a.borrowId.localeCompare(b.borrowId));
+
+        sortedDevices.forEach(device => {
+            const row = table.insertRow();
+            row.style.cursor = 'pointer';
+            row.addEventListener('click', () => showItemDetails(device.id));
+            row.insertCell(0).textContent = `${device.borrowId} - ${device.name}`;
+            
+            const statusCell = row.insertCell(1);
+            statusCell.textContent = device.borrowed ? '已借出' : '可借用';
+            statusCell.className = device.borrowed ? 'status-borrowed' : 'status-available';
+            
+            row.insertCell(2).textContent = device.borrowClass || '';
+            row.insertCell(3).textContent = device.borrowTime || '';
+            row.insertCell(4).textContent = device.note || '';
+        });
+    });
+}
+
+// 關閉按鈕和點擊外部關閉功能
+document.querySelector('.close-button').addEventListener('click', () => {
+    document.getElementById('itemDetailModal').style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    const modal = document.getElementById('itemDetailModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
 });
 
