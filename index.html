@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>裝置借用系統</title>
     <link rel="stylesheet" href="app.css">
-    <!-- 確保使用正確的 Firebase 版本和必要的 SDK -->
+    <!-- 確保 Firebase SDK 的順序正確 -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 </head>
 <body>
     <div id="appSection">
@@ -117,6 +117,7 @@
         </div>
     </div>
 
+    <!-- 將 script 標籤移到這裡 -->
     <script src="app.js"></script>
 </body>
 </html>
