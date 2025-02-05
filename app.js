@@ -601,6 +601,37 @@ async function updateDevices() {
     }
 }
 
+// 登入相關的輔助函數 - 需要在主要登入函數之前定義
+function showLoginButton() {
+    const loginButton = document.getElementById('loginButton');
+    const logoutButton = document.getElementById('logoutButton');
+    if (loginButton) loginButton.style.display = 'inline-flex';
+    if (logoutButton) logoutButton.style.display = 'none';
+}
+
+function hideLoginButton() {
+    const loginButton = document.getElementById('loginButton');
+    const logoutButton = document.getElementById('logoutButton');
+    if (loginButton) loginButton.style.display = 'none';
+    if (logoutButton) logoutButton.style.display = 'inline-flex';
+}
+
+function showLoggedInButtons() {
+    const buttons = ['scanButton', 'returnButton', 'historyButton'];
+    buttons.forEach(id => {
+        const button = document.getElementById(id);
+        if (button) button.style.display = 'inline-flex';
+    });
+}
+
+function hideLoggedInButtons() {
+    const buttons = ['scanButton', 'returnButton', 'historyButton'];
+    buttons.forEach(id => {
+        const button = document.getElementById(id);
+        if (button) button.style.display = 'none';
+    });
+}
+
 // 登入相關函數
 async function handleLogin() {
     if (loginInProgress) {
