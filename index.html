@@ -5,21 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>裝置借用系統</title>
     <link rel="stylesheet" href="app.css">
+    <!-- 確保使用正確的 Firebase 版本和必要的 SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 </head>
 <body>
     <div id="appSection">
         <header>
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h1>裝置借用系統</h1>
-                <button id="darkModeToggle" class="mode-button" aria-label="切換夜間模式">
-                    <span class="mode-icon light-icon">☀️</span>
-                    <span class="mode-icon dark-icon">🌙</span>
-                </button>
+                <div class="header-right">
+                    <!-- 新增登入按鈕 -->
+                    <button id="loginButton" class="primary-button">
+                        <img src="https://www.google.com/favicon.ico" alt="Google" style="width: 18px; height: 18px; margin-right: 8px; vertical-align: middle;">
+                        Google 登入
+                    </button>
+                    <!-- 其他按鈕初始隱藏 -->
+                    <button id="logoutButton" class="secondary-button" style="display: none;">登出</button>
+                    <button id="darkModeToggle" class="mode-button" aria-label="切換夜間模式">
+                        <span class="mode-icon light-icon">☀️</span>
+                        <span class="mode-icon dark-icon">🌙</span>
+                    </button>
+                </div>
             </div>
             <div class="header-buttons">
-                <button id="scanButton" class="primary-button">掃描借用</button>
-                <button id="returnButton" class="warning-button" onclick="toggleReturnScanner()">掃描歸還</button>
-                <button id="historyButton" class="secondary-button" onclick="showHistory()">借閱歷史</button>
+                <!-- 修改這些按鈕的初始狀態為隱藏 -->
+                <button id="scanButton" class="primary-button" style="display: none;">掃描借用</button>
+                <button id="returnButton" class="warning-button" onclick="toggleReturnScanner()" style="display: none;">掃描歸還</button>
+                <button id="historyButton" class="secondary-button" onclick="showHistory()" style="display: none;">借閱歷史</button>
             </div>
         </header>
 
@@ -93,7 +107,7 @@
                 <h2 id="modalItemName"></h2>
             </div>
             <div class="modal-body">
-                <div class="item-image">
+                <div class="item-image"></div>
                     <img id="modalItemImage" src="" alt="設備圖片">
                 </div>
                 <div class="item-details">
@@ -106,8 +120,6 @@
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

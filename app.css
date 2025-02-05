@@ -785,3 +785,26 @@ body.dark-mode #modalItemStatus.status-available {
 body.dark-mode #modalItemStatus.status-borrowed {
     color: #f44336;
 }
+
+/* ...existing code... */
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#loginButton, #logoutButton {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+#loginButton img {
+    margin-right: 8px;
+}
+
+/* ...existing code... */

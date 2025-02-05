@@ -10,9 +10,16 @@ const firebaseConfig = {
     measurementId: "G-4MMDL3BGB6"
 };
 
-// 初始化 Firebase
+// 初始化 Firebase 和 Auth
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
+const auth = firebase.auth();
+
+// 設定 Google 登入提供者
+const provider = new firebase.auth.GoogleAuthProvider();
+provider.setCustomParameters({
+    prompt: 'select_account'
+});
 
 let currentUser = null;
 const privilegedUsers = ['teacher', 'yang', 'test']; //管理員
@@ -546,4 +553,86 @@ window.addEventListener('click', (event) => {
         modal.style.display = 'none';
     }
 });
+
+// 登入相關函數
+function handleLogin() {
+    auth.signInWithPopup(provider)
+        .then((result) => {
+            console.log('登入成功：', result.user.email);
+        })
+        .catch((error) => {
+            console.error('登入失敗：', error);
+            alert('登入失敗：' + error.message);
+        });
+}
+
+// 修改登出函數
+function handleLogout() {
+    auth.signOut()
+        .then(() => {
+            console.log('登出成功');
+            showLoginButton();
+            window.location.reload(); // 重新載入頁面以重置狀態
+        })
+        .catch((error) => {
+            console.error('登出失敗：', error);
+            alert('登出失敗：' + error.message);
+        });
+}
+
+// 監聽認證狀態變化
+auth.onAuthStateChanged(user => {
+    console.log('Auth state changed:', user); // 添加除錯訊息
+    if (user) {
+        // 使用者已登入
+        currentUser = user;
+        console.log('使用者已登入：', user.email);
+        hideLoginButton();
+        showLoggedInButtons();
+        updateCurrentUserDisplay();
+    } else {
+        // 使用者未登入
+        currentUser = null;
+        showLoginButton();
+        hideLoggedInButtons();
+        updateCurrentUserDisplay();
+    }
+});
+
+// 顯示/隱藏按鈕的輔助函數
+function showLoginButton() {
+    document.getElementById('loginButton').style.display = 'inline-flex';
+    document.getElementById('logoutButton').style.display = 'none';
+}
+
+function hideLoginButton() {
+    document.getElementById('loginButton').style.display = 'none';
+    document.getElementById('logoutButton').style.display = 'inline-flex';
+}
+
+function showLoggedInButtons() {
+    document.getElementById('scanButton').style.display = 'inline-flex';
+    document.getElementById('returnButton').style.display = 'inline-flex';
+    document.getElementById('historyButton').style.display = 'inline-flex';
+}
+
+function hideLoggedInButtons() {
+    document.getElementById('scanButton').style.display = 'none';
+    document.getElementById('returnButton').style.display = 'none';
+    document.getElementById('historyButton').style.display = 'none';
+}
+
+// 更新當前用戶顯示
+function updateCurrentUserDisplay() {
+    const userDisplayElement = document.getElementById('currentUserDisplay');
+    if (currentUser) {
+        userDisplayElement.textContent = `使用者: ${currentUser.email}`;
+    } else {
+        userDisplayElement.textContent = '';
+    }
+}
+
+// 添加事件監聽器
+document.getElementById('loginButton').addEventListener('click', handleLogin);
+document.getElementById('logoutButton').addEventListener('click', handleLogout);
 
