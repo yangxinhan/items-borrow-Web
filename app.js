@@ -10,6 +10,30 @@ const firebaseConfig = {
     measurementId: "G-4MMDL3BGB6"
 };
 
+// 管理員相關常數
+const SUPER_ADMINS = ['s1111109@gm.ntpu.edu.tw', 'yang.grace06@gmail.com']; // 超級管理員
+let adminList = []; // 將從 Firebase 讀取
+
+// 管理員權限檢查函數
+function isSuperAdmin(email) {
+    return SUPER_ADMINS.includes(email);
+}
+
+function isAdmin(email) {
+    return SUPER_ADMINS.includes(email) || adminList.includes(email);
+}
+
+// 初始化時讀取管理員列表
+async function initializeAdminList() {
+    try {
+        const snapshot = await database.ref('admins').once('value');
+        adminList = snapshot.val()?.list || [];
+        console.log('管理員列表載入成功:', adminList);
+    } catch (error) {
+        console.error('載入管理員列表失敗:', error);
+    }
+}
+
 // 全域變數宣告
 let database;
 let auth;
@@ -697,6 +721,16 @@ auth.onAuthStateChanged(async user => {
     
     if (user) {
         currentUser = user;
+        await initializeAdminList(); // 載入管理員列表
+        
+        // 根據權限顯示管理按鈕
+        if (isSuperAdmin(user.email)) {
+            showSuperAdminControls();
+        }
+        if (isAdmin(user.email)) {
+            showAdminControls();
+        }
+        
         hideLoginButton();
         showLoggedInButtons();
         updateCurrentUserDisplay();
@@ -735,5 +769,102 @@ function updateCurrentUserDisplay() {
     } else {
         userDisplayElement.textContent = '';
     }
+}
+
+// 新增管理員按鈕處理函數
+function showAdminControls() {
+    const adminButtons = `
+        <button id="addItemButton" class="admin-button">新增物品</button>
+        <button id="editItemButton" class="admin-button">編輯物品</button>
+        <button id="deleteItemButton" class="admin-button">刪除物品</button>
+    `;
+    document.querySelector('.header-buttons').insertAdjacentHTML('beforeend', adminButtons);
+    
+    // 添加事件監聽器
+    document.getElementById('addItemButton').addEventListener('click', showAddItemModal);
+    document.getElementById('editItemButton').addEventListener('click', toggleItemEditMode);
+    document.getElementById('deleteItemButton').addEventListener('click', toggleItemDeleteMode);
+}
+
+function showSuperAdminControls() {
+    const superAdminButtons = `
+        <button id="manageAdminsButton" class="super-admin-button">管理員設置</button>
+    `;
+    document.querySelector('.header-buttons').insertAdjacentHTML('beforeend', superAdminButtons);
+    
+    document.getElementById('manageAdminsButton').addEventListener('click', showAdminManagementModal);
+}
+
+// 管理員管理模態框
+function showAdminManagementModal() {
+    const modalHtml = `
+        <div id="adminManagementModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>管理員設置</h2>
+                <div class="admin-list"></div>
+                <div class="admin-add">
+                    <input type="email" id="newAdminEmail" placeholder="輸入email">
+                    <button onclick="addAdmin()">新增管理員</button>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    updateAdminList();
+}
+
+// 新增管理員
+async function addAdmin() {
+    if (!isSuperAdmin(currentUser.email)) return;
+    
+    const email = document.getElementById('newAdminEmail').value;
+    if (!email || !email.includes('@')) {
+        alert('請輸入有效的email');
+        return;
+    }
+    
+    try {
+        const newList = [...adminList, email];
+        await database.ref('admins').set({ list: newList });
+        adminList = newList;
+        updateAdminList();
+        alert('新增管理員成功');
+    } catch (error) {
+        console.error('新增管理員失敗:', error);
+        alert('新增失敗');
+    }
+}
+
+// 移除管理員
+async function removeAdmin(email) {
+    if (!isSuperAdmin(currentUser.email)) return;
+    
+    try {
+        const newList = adminList.filter(admin => admin !== email);
+        await database.ref('admins').set({ list: newList });
+        adminList = newList;
+        updateAdminList();
+        alert('移除管理員成功');
+    } catch (error) {
+        console.error('移除管理員失敗:', error);
+        alert('移除失敗');
+    }
+}
+
+// 更新管理員列表顯示
+function updateAdminList() {
+    const container = document.querySelector('.admin-list');
+    container.innerHTML = `
+        <h3>當前管理員列表：</h3>
+        <ul>
+            ${adminList.map(email => `
+                <li>
+                    ${email}
+                    <button onclick="removeAdmin('${email}')" class="remove-admin">移除</button>
+                </li>
+            `).join('')}
+        </ul>
+    `;
 }
 

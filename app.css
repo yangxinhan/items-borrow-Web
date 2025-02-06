@@ -820,3 +820,68 @@ body.dark-mode #modalItemStatus.status-borrowed {
 }
 
 /* ...existing code... */
+
+/* ...existing styles... */
+
+.admin-button {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.super-admin-button {
+    background-color: #c51162;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.admin-list {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+.admin-add {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.admin-add input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.remove-admin {
+    background-color: #ff1744;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* Dark mode styles */
+body.dark-mode .admin-list {
+    background-color: #333;
+}
+
+body.dark-mode .admin-add input {
+    background-color: #444;
+    color: white;
+    border-color: #555;
+}
+
+/* ...rest of existing styles... */
