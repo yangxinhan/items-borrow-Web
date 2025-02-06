@@ -521,6 +521,18 @@ close-button:hover {
     justify-content: center;
     background-color: #f5f5f5;
     border-radius: 4px;
+    overflow: hidden; /* 新增 */
+}
+
+.item-image img {
+    max-width: 100%;
+    max-height: 300px;
+    width: auto; /* 新增 */
+    height: auto; /* 新增 */
+    border-radius: 4px;
+    object-fit: contain;
+    display: block; /* 新增 */
+    margin: 0 auto; /* 新增 */
 }
 
 .no-image-placeholder {

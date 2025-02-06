@@ -193,7 +193,6 @@ function handleBarcodeScan(event) {
 }
 
 function processDeviceBarcode(barcode) {
-    // 確認用戶已登入
     if (!currentUser) {
         alert('請先登入');
         return;
@@ -206,11 +205,16 @@ function processDeviceBarcode(barcode) {
             const device = snapshot.val()[deviceId];
             
             if (device.borrowed) {
+                // 檢查是否為原借用者
+                if (device.borrowClass !== currentUser.email) {
+                    alert('此設備由其他使用者借出，只能由原借用者歸還');
+                    resetScannerState();
+                    return;
+                }
                 returnDevice(deviceId);
                 resetScannerState();
                 closeScanners();
             } else {
-                // 直接使用 Google 帳號資訊進行借用
                 borrowDevice(deviceId, currentUser.email);
                 resetScannerState();
                 closeScanners();
@@ -222,8 +226,6 @@ function processDeviceBarcode(barcode) {
         }
     });
 }
-
-// 移除 processStudentId 函數，因為不再需要
 
 function showApp() {
     document.getElementById('appSection').style.display = 'block';
@@ -392,6 +394,13 @@ function returnDevice(deviceId) {
     const deviceRef = database.ref(`devices/${deviceId}`);
     deviceRef.once('value').then((snapshot) => {
         const device = snapshot.val();
+        
+        // 再次確認是否為原借用者
+        if (device.borrowClass !== currentUser.email) {
+            alert('只有原借用者可以歸還設備');
+            return;
+        }
+
         const returnTime = new Date().toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
         
         Promise.all([
