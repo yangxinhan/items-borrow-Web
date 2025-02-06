@@ -763,32 +763,45 @@ function removeAdminControls() {
 
 // 修改管理員控制項顯示函數
 function showAdminControls() {
-    // 檢查是否已經存在管理員按鈕
-    if (document.querySelector('.admin-button')) return;
+    // 移除現有的管理員按鈕（如果有的話）
+    removeAdminControls();
     
-    const adminButtons = `
+    // 添加管理員按鈕到 header-buttons
+    const headerButtons = document.querySelector('.header-buttons');
+    const adminButtonsHtml = `
         <button id="addItemButton" class="admin-button">新增物品</button>
         <button id="editItemButton" class="admin-button">編輯物品</button>
         <button id="deleteItemButton" class="admin-button">刪除物品</button>
     `;
-    document.querySelector('.header-buttons').insertAdjacentHTML('beforeend', adminButtons);
-    
+    headerButtons.insertAdjacentHTML('beforeend', adminButtonsHtml);
+
     // 添加事件監聽器
-    document.getElementById('addItemButton')?.addEventListener('click', showAddItemModal);
-    document.getElementById('editItemButton')?.addEventListener('click', toggleItemEditMode);
-    document.getElementById('deleteItemButton')?.addEventListener('click', toggleItemDeleteMode);
+    document.getElementById('addItemButton')?.addEventListener('click', () => {
+        console.log('新增物品按鈕點擊');
+        showAddItemModal();
+    });
+    document.getElementById('editItemButton')?.addEventListener('click', () => {
+        console.log('編輯物品按鈕點擊');
+        toggleItemEditMode();
+    });
+    document.getElementById('deleteItemButton')?.addEventListener('click', () => {
+        console.log('刪除物品按鈕點擊');
+        toggleItemDeleteMode();
+    });
 }
 
+// 修改超級管理員控制項顯示函數
 function showSuperAdminControls() {
-    // 檢查是否已經存在超級管理員按鈕
-    if (document.querySelector('.super-admin-button')) return;
-    
-    const superAdminButtons = `
+    const headerButtons = document.querySelector('.header-buttons');
+    const superAdminButtonHtml = `
         <button id="manageAdminsButton" class="super-admin-button">管理員設置</button>
     `;
-    document.querySelector('.header-buttons').insertAdjacentHTML('beforeend', superAdminButtons);
-    
-    document.getElementById('manageAdminsButton')?.addEventListener('click', showAdminManagementModal);
+    headerButtons.insertAdjacentHTML('beforeend', superAdminButtonHtml);
+
+    document.getElementById('manageAdminsButton')?.addEventListener('click', () => {
+        console.log('管理員設置按鈕點擊');
+        showAdminManagementModal();
+    });
 }
 
 // 移除重複的事件監聽器註冊
