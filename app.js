@@ -721,27 +721,75 @@ auth.onAuthStateChanged(async user => {
     
     if (user) {
         currentUser = user;
-        await initializeAdminList(); // 載入管理員列表
-        
-        // 根據權限顯示管理按鈕
-        if (isSuperAdmin(user.email)) {
-            showSuperAdminControls();
-        }
-        if (isAdmin(user.email)) {
-            showAdminControls();
-        }
-        
         hideLoginButton();
         showLoggedInButtons();
         updateCurrentUserDisplay();
-        await updateDevices(); // 重新載入數據
+        
+        // 先載入管理員列表，再檢查權限
+        await initializeAdminList();
+        console.log('當前用戶:', user.email);
+        console.log('管理員列表:', adminList);
+        console.log('是否超級管理員:', isSuperAdmin(user.email));
+        console.log('是否管理員:', isAdmin(user.email));
+        
+        // 移除現有的管理員按鈕（如果有的話）
+        removeAdminControls();
+        
+        // 根據權限顯示管理按鈕
+        if (isSuperAdmin(user.email)) {
+            console.log('顯示超級管理員控制項');
+            showSuperAdminControls();
+            showAdminControls(); // 超級管理員也有一般管理員權限
+        } else if (isAdmin(user.email)) {
+            console.log('顯示管理員控制項');
+            showAdminControls();
+        }
+        
+        await updateDevices();
     } else {
         currentUser = null;
         showLoginButton();
         hideLoggedInButtons();
+        removeAdminControls(); // 登出時移除管理員按鈕
         updateCurrentUserDisplay();
     }
 });
+
+// 新增移除管理員控制項的函數
+function removeAdminControls() {
+    const adminButtons = document.querySelectorAll('.admin-button, .super-admin-button');
+    adminButtons.forEach(button => button.remove());
+}
+
+// 修改管理員控制項顯示函數
+function showAdminControls() {
+    // 檢查是否已經存在管理員按鈕
+    if (document.querySelector('.admin-button')) return;
+    
+    const adminButtons = `
+        <button id="addItemButton" class="admin-button">新增物品</button>
+        <button id="editItemButton" class="admin-button">編輯物品</button>
+        <button id="deleteItemButton" class="admin-button">刪除物品</button>
+    `;
+    document.querySelector('.header-buttons').insertAdjacentHTML('beforeend', adminButtons);
+    
+    // 添加事件監聽器
+    document.getElementById('addItemButton')?.addEventListener('click', showAddItemModal);
+    document.getElementById('editItemButton')?.addEventListener('click', toggleItemEditMode);
+    document.getElementById('deleteItemButton')?.addEventListener('click', toggleItemDeleteMode);
+}
+
+function showSuperAdminControls() {
+    // 檢查是否已經存在超級管理員按鈕
+    if (document.querySelector('.super-admin-button')) return;
+    
+    const superAdminButtons = `
+        <button id="manageAdminsButton" class="super-admin-button">管理員設置</button>
+    `;
+    document.querySelector('.header-buttons').insertAdjacentHTML('beforeend', superAdminButtons);
+    
+    document.getElementById('manageAdminsButton')?.addEventListener('click', showAdminManagementModal);
+}
 
 // 移除重複的事件監聽器註冊
 document.addEventListener('DOMContentLoaded', function() {
