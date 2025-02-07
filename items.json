@@ -1,13 +1,12 @@
-
-  {
-    
+{
     "admins": {
-      "list": [
-        "xinhanyang061@gmail.com",
-        "s1111119@stu.dwhs.tn.edu.tw",
-        "admin3@example.com"
-      ]
-        },
+        "list": [
+            "s1111109@gm.ntpu.edu.tw",
+            "yang.grace06@gmail.com",
+            "xinhanyang061@gmail.com",
+            "s1111119@stu.dwhs.tn.edu.tw"
+        ]
+    },
     "devices": {
         "device01": {
             "name": "samsung手機Sam01(含充電線組)",

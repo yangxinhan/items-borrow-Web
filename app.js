@@ -929,3 +929,57 @@ function updateAdminList() {
     `;
 }
 
+/* ...existing code... */
+
+// 新增物品相關函數
+function showAddItemModal() {
+    const modal = document.getElementById('addItemModal');
+    modal.style.display = 'block';
+}
+
+function toggleItemEditMode() {
+    console.log('切換編輯模式');
+    // 實作編輯功能
+}
+
+function toggleItemDeleteMode() {
+    console.log('切換刪除模式');
+    // 實作刪除功能
+}
+
+// 為所有模態框添加關閉功能
+document.querySelectorAll('.modal .close-button').forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.target.closest('.modal').style.display = 'none';
+    });
+});
+
+// 監聽新增物品表單提交
+document.getElementById('addItemForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = {
+        name: document.getElementById('itemName').value,
+        borrowId: document.getElementById('itemId').value,
+        specs: document.getElementById('itemSpecs').value,
+        instructions: document.getElementById('itemInstructions').value,
+        borrowed: false,
+        note: ''
+    };
+    
+    try {
+        await addNewItem(formData);
+        document.getElementById('addItemModal').style.display = 'none';
+        updateDevices();
+    } catch (error) {
+        console.error('新增物品失敗:', error);
+        alert('新增失敗');
+    }
+});
+
+async function addNewItem(data) {
+    const newItemRef = database.ref('devices').push();
+    await newItemRef.set(data);
+}
+
+/* ...existing code... */
+

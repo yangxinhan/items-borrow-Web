@@ -120,6 +120,61 @@
         </div>
     </div>
 
+    <!-- 新增物品模態框 -->
+    <div id="addItemModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>新增物品</h2>
+            <div class="form-container">
+                <form id="addItemForm">
+                    <div class="form-group">
+                        <label for="itemName">物品名稱：</label>
+                        <input type="text" id="itemName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemId">借用ID：</label>
+                        <input type="text" id="itemId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemSpecs">規格說明：</label>
+                        <textarea id="itemSpecs"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="itemInstructions">使用說明：</label>
+                        <textarea id="itemInstructions"></textarea>
+                    </div>
+                    <button type="submit" class="admin-button">新增</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯物品模態框 -->
+    <div id="editItemModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>編輯物品資訊</h2>
+            <div class="form-container">
+                <form id="editItemForm">
+                    <!-- 與新增物品表單相同的欄位 -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理員設置模態框 -->
+    <div id="adminManagementModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>管理員設置</h2>
+            <div class="admin-list"></div>
+            <div class="admin-add">
+                <input type="email" id="newAdminEmail" placeholder="輸入email">
+                <button onclick="addAdmin()" class="admin-button">新增管理員</button>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js"></script>
 </body>
 </html>
