@@ -937,6 +937,76 @@ function updateAdminList() {
 
 /* ...existing code... */
 
+// 修改新增物品相關函數
+async function showAddItemModal() {
+    const modal = document.getElementById('addItemModal');
+    modal.style.display = 'block';
+
+    // 清空表單
+    document.getElementById('addItemForm').reset();
+}
+
+// 修改表單提交處理
+document.getElementById('addItemForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = {
+        name: document.getElementById('itemName').value,
+        borrowId: document.getElementById('itemId').value,
+        specs: document.getElementById('itemSpecs').value,
+        instructions: document.getElementById('itemInstructions').value,
+        borrowed: false,
+        borrowClass: '',
+        borrowTime: '',
+        note: '',
+        imageUrl: ''
+    };
+    
+    try {
+        // 檢查 borrowId 是否已存在
+        const snapshot = await database.ref('devices')
+            .orderByChild('borrowId')
+            .equalTo(formData.borrowId)
+            .once('value');
+            
+        if (snapshot.exists()) {
+            alert('此借用ID已存在！');
+            return;
+        }
+
+        // 新增物品到資料庫
+        await addNewItem(formData);
+        
+        // 關閉模態框
+        document.getElementById('addItemModal').style.display = 'none';
+        
+        // 重新載入設備列表
+        await updateDevices();
+        
+        alert('新增物品成功！');
+    } catch (error) {
+        console.error('新增物品失敗:', error);
+        alert('新增失敗：' + error.message);
+    }
+});
+
+// 修改新增物品到資料庫的函數
+async function addNewItem(data) {
+    // 使用 push() 產生新的唯一 key
+    const newItemRef = database.ref('devices').push();
+    
+    // 將資料加入資料庫
+    await newItemRef.set({
+        ...data,
+        id: newItemRef.key // 儲存產生的 key 作為 id
+    });
+    
+    console.log('新增物品成功，ID:', newItemRef.key);
+    return newItemRef.key;
+}
+
+/* ...existing code... */
+
 // 新增物品相關函數
 function showAddItemModal() {
     const modal = document.getElementById('addItemModal');
