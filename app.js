@@ -12,7 +12,7 @@ const firebaseConfig = {
 
 // 管理員相關常數
 const SUPER_ADMINS = ['s1111109@gm.ntpu.edu.tw', 'yang.grace06@gmail.com']; // 超級管理員
-let adminList = []; // 將從 Firebase 讀取
+let adminList = ['xinhanyang061@gmail.com']; // 預設管理員清單
 
 // 管理員權限檢查函數
 function isSuperAdmin(email) {
@@ -678,12 +678,22 @@ async function handleLogin() {
         const result = await auth.signInWithPopup(provider);
         console.log('Google 登入成功', result.user.email);
         currentUser = result.user;
+        
+        // 檢查權限並顯示相應按鈕
+        if (isSuperAdmin(result.user.email)) {
+            console.log('是超級管理員');
+            showSuperAdminControls();
+            showAdminControls();
+        } else if (isAdmin(result.user.email)) {
+            console.log('是管理員');
+            showAdminControls();
+        }
+        
         hideLoginButton();
         showLoggedInButtons();
         updateCurrentUserDisplay();
     } catch (error) {
         console.error('登入過程發生錯誤:', error);
-        // 只有在真正登入失敗時才顯示錯誤
         if (!currentUser) {
             alert('登入失敗：' + error.message);
         }
@@ -721,36 +731,32 @@ auth.onAuthStateChanged(async user => {
     
     if (user) {
         currentUser = user;
-        hideLoginButton();
-        showLoggedInButtons();
-        updateCurrentUserDisplay();
-        
-        // 先載入管理員列表，再檢查權限
-        await initializeAdminList();
         console.log('當前用戶:', user.email);
-        console.log('管理員列表:', adminList);
         console.log('是否超級管理員:', isSuperAdmin(user.email));
         console.log('是否管理員:', isAdmin(user.email));
         
-        // 移除現有的管理員按鈕（如果有的話）
+        // 移除現有的管理員按鈕
         removeAdminControls();
         
-        // 根據權限顯示管理按鈕
+        // 根據權限顯示按鈕
         if (isSuperAdmin(user.email)) {
             console.log('顯示超級管理員控制項');
             showSuperAdminControls();
-            showAdminControls(); // 超級管理員也有一般管理員權限
+            showAdminControls();
         } else if (isAdmin(user.email)) {
             console.log('顯示管理員控制項');
             showAdminControls();
         }
         
+        hideLoginButton();
+        showLoggedInButtons();
+        updateCurrentUserDisplay();
         await updateDevices();
     } else {
         currentUser = null;
         showLoginButton();
         hideLoggedInButtons();
-        removeAdminControls(); // 登出時移除管理員按鈕
+        removeAdminControls();
         updateCurrentUserDisplay();
     }
 });
