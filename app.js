@@ -974,35 +974,45 @@ document.getElementById('addItemForm')?.addEventListener('submit', async (e) => 
             return;
         }
 
-        // 新增物品到資料庫
+        // 新增物品到資料庫並自動更新顯示
         await addNewItem(formData);
+        
+    } catch (error) {
+        console.error('新增物品失敗:', error);
+    }
+});
+
+/* ...existing code... */
+
+// 修改新增物品相關函數
+async function addNewItem(data) {
+    try {
+        // 使用 push() 產生新的唯一 key
+        const newItemRef = database.ref('devices').push();
+        
+        // 將資料加入資料庫
+        await newItemRef.set({
+            ...data,
+            id: newItemRef.key
+        });
+        
+        console.log('新增物品成功，ID:', newItemRef.key);
+        
+        // 直接更新顯示，不需要重新載入頁面
+        await updateDevices();
         
         // 關閉模態框
         document.getElementById('addItemModal').style.display = 'none';
         
-        // 重新載入設備列表
-        await updateDevices();
-        
+        // 顯示成功訊息
         alert('新增物品成功！');
+        
+        return newItemRef.key;
     } catch (error) {
         console.error('新增物品失敗:', error);
         alert('新增失敗：' + error.message);
+        throw error;
     }
-});
-
-// 修改新增物品到資料庫的函數
-async function addNewItem(data) {
-    // 使用 push() 產生新的唯一 key
-    const newItemRef = database.ref('devices').push();
-    
-    // 將資料加入資料庫
-    await newItemRef.set({
-        ...data,
-        id: newItemRef.key // 儲存產生的 key 作為 id
-    });
-    
-    console.log('新增物品成功，ID:', newItemRef.key);
-    return newItemRef.key;
 }
 
 /* ...existing code... */
